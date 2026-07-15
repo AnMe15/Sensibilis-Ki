@@ -3697,11 +3697,48 @@ function kpDemoStart(){
 
 /* ── CHATBOT ───────────────────────────────────────────── */
 const kb=[
-  [/ki pass|tool|prüftool/i,'Der KI Pass ist unser Dokumentations-Tool für DSGVO & EU AI Act. Der Schnellcheck ist kostenlos, die Vollversion im Juli gratis. Einfach auf "KI Pass" klicken.'],
-  [/kosten|preis|kostenlos|gratis/i,'Im Juli ist die vollständige Professional-Version kostenlos — 30 Tage, alles inklusive. Danach 59 € einmalig oder dauerhaft kostenloser Schnellcheck.'],
-  [/dsgvo|datenschutz/i,'DSGVO und EU AI Act gelten auch für Unternehmen, die KI nur nutzen. Der KI Pass hilft Ihnen, alles korrekt zu dokumentieren.'],
-  [/beratung|gespräch|kontakt/i,'Sehr gerne! Schreiben Sie mir direkt unter amen1@t-online.de — ich antworte innerhalb von 24 Stunden.'],
-  [/wer|annett|sensibilis/i,'Ich bin Annett Mende — zertifizierte KI-Managerin und Gründerin von sensibilis. Ich begleite Unternehmen praxisnah in die KI-Welt.'],
+  /* KI Pass — Was ist das */
+  [/was ist.*ki pass|ki pass.*was|erkl.r.*ki pass/i,'Der KI Pass ist ein digitales Dokumentations-Tool, das ich für Betriebe entwickelt habe, die KI einsetzen — ob ChatGPT, Copilot oder andere Tools. Sie erfassen Ihre KI-Nutzung strukturiert, erhalten eine Risikoklasse nach EU AI Act und bekommen exportfertige Dokumente: Verarbeitungsverzeichnis, Einstufungsdokument und einen konkreten Fahrplan. Alles läuft im Browser, nichts wird gespeichert.'],
+  /* KI Pass — Schnellcheck */
+  [/schnellcheck|selbstcheck|test.*ki|ki.*test|checkliste/i,'Der Schnellcheck auf der KI-Pass-Seite ist kostenlos — drei Fragen, zwei Minuten, direkte Einordnung. Er zeigt Ihnen, ob Sie eher Standarddokumentation oder Hochrisiko-Prüfung brauchen. Keine Anmeldung, kein Haken. Einfach ausprobieren.'],
+  /* KI Pass — Preis */
+  [/preis|kosten|was kostet|wie teuer|39|juli.*aktion|aktion/i,'Im Juli gibt es den KI Pass für 39 €. Das ist die vollständige Version — kein Abo, keine versteckten Kosten. Sie zahlen einmal und haben dauerhaft Zugriff auf Ihre Dokumente. Nach Juli wird der Preis angepasst. Wenn Sie also jetzt gerade hier sind: guter Zeitpunkt.'],
+  /* EU AI Act — Was ist das */
+  [/eu ai act|ai act|ki.gesetz|ki.regulierung/i,'Der EU AI Act ist seit 2024 in Kraft — die weltweit erste verbindliche KI-Regulierung. Er teilt KI-Systeme in Risikoklassen ein und legt fest, was Unternehmen dokumentieren und nachweisen müssen. 2026 greifen die strengen Fristen. Das klingt erstmal viel — ist es aber nicht, wenn man weiß, wo man steht. Genau dafür gibt es den KI Pass.'],
+  /* EU AI Act — Fristen */
+  [/frist|deadline|wann|bis wann|pflicht/i,'Die wichtigsten Fristen: Seit Februar 2025 gelten die Verbote für unannehmbares Risiko. Ab August 2026 müssen Hochrisiko-Systeme vollständig dokumentiert sein. Für die meisten kleinen Betriebe, die ChatGPT oder ähnliche Tools nutzen, geht es vor allem um die korrekte Einstufung und einen AVV. Das ist machbar — und ich helfe dabei.'],
+  /* DSGVO */
+  [/dsgvo|datenschutz|personenbezogen|avv|auftragsverarbeitung/i,'DSGVO und KI — das ist ein heikles Thema, aber kein unlösbares. Wer ChatGPT für Kundentexte nutzt und dabei Namen oder andere personenbezogene Daten eingibt, braucht zwingend einen Auftragsverarbeitungsvertrag (AVV) mit dem Anbieter. Außerdem sollte das Daten-Training deaktiviert sein. Der KI Pass prüft genau das — Schritt für Schritt.'],
+  /* ChatGPT */
+  [/chatgpt|gpt|openai/i,'ChatGPT ist das meistgenutzte KI-Tool in kleinen Betrieben — und eines der am häufigsten falsch eingesetzten. Das Problem: Viele nutzen die kostenlose Consumer-Version, die für berufliche Zwecke mit Kundendaten schlicht nicht geeignet ist. Für Unternehmen braucht es die Business-Version mit AVV. Ich zeige Ihnen, was genau einzustellen ist.'],
+  /* Copilot */
+  [/copilot|microsoft|office.*ki|ki.*office/i,'Microsoft Copilot ist direkt in Office 365 integriert und für viele Betriebe der einfachste Einstieg in KI. Der große Vorteil: Microsoft hat einen AVV bereits standardmäßig eingebettet. Trotzdem empfehle ich, die Einstellungen zu prüfen und die KI-Nutzung im Betrieb zu dokumentieren — das gehört zur EU AI Act-Konformität.'],
+  /* Risikoklassen */
+  [/risikoklasse|klasse|einstufung|hochrisiko/i,'Der EU AI Act unterscheidet vier Stufen: minimales Risiko, begrenztes Risiko, Hochrisiko und unannehmbares Risiko. Die meisten kleinen Betriebe landen mit ChatGPT & Co. bei Klasse 2 oder 3 — also kein Hochrisiko, aber Dokumentationspflicht. Was genau für Ihren Betrieb gilt, zeigt der Schnellcheck in zwei Minuten.'],
+  /* Content Planer */
+  [/content.planer|redaktionsplan|social media.*ki|ki.*social|beitrag.*ki/i,'Den Content Planer entwickle ich gerade als nächstes Tool. Er soll Redaktionsplanung, Texterstellung und Bildvorschläge für Social Media zusammenführen — abgestimmt auf Ihre Branche und Ihren Kanal. Wenn Sie informiert bleiben möchten, wenn er verfügbar ist: schreiben Sie mir kurz.'],
+  /* Website-Check */
+  [/website.check|webcheck|website.*prüf|seite.*analyse/i,'Der Website-Check analysiert Ihre Website automatisch: Wie DSGVO-konform ist sie? Wo gibt es KI-Optimierungspotenzial? Was läuft technisch nicht rund? Das Tool ist gerade in Entwicklung. Ich melde mich, sobald es verfügbar ist — wenn Sie möchten, tragen Sie sich einfach über das Kontaktformular ein.'],
+  /* KI im Handwerk / Branche */
+  [/handwerk|werkstatt|tischler|schreiner|elektriker|sanitär|maler/i,'Im Handwerk steckt mehr KI-Potenzial als viele denken: Angebotserstellung, Kundenkommunikation, Dokumentation — alles lässt sich mit den richtigen Tools deutlich schneller erledigen. Ich habe selbst Erfahrung mit Betrieben ohne IT-Abteilung und weiß, was praxistauglich ist und was nicht.'],
+  /* KI im Hotel / Gastronomie */
+  [/hotel|gastronomie|restaurant|rezeption|bewirtung/i,'Hotellerie und Gastronomie sind Bereiche, in denen ich selbst tief verwurzelt bin — ich arbeite seit Jahren im laVital in Wesendorf. KI hilft hier beim Gästemanagement, bei Bewertungsantworten, bei der Personalplanung und beim Marketing. Und ja, auch dabei gelten DSGVO und EU AI Act.'],
+  /* Annett / Sensibilis — Wer */
+  [/wer bist|wer sind|annett|sensibilis.*wer|über.*sensibilis/i,'Ich bin Annett Mende — ich leite Fitness, Marketing und HR im laVital in Wesendorf und bilde mich gerade zur KI-Managerin aus. Sensibilis ist mein eigenes Projekt: KI-Beratung für kleine Betriebe, die keine IT-Abteilung haben und trotzdem zukunftsfähig sein wollen. Ich kenne das aus eigener Erfahrung.'],
+  /* Wo / Region */
+  [/wo|region|niedersachsen|uelzen|gifhorn|bad bodenteich|heide|celle|lüneburg/i,'Sensibilis ist in Bad Bodenteich ansässig — Alte Heerstraße, mitten in der Lüneburger Heide. Ich berate Betriebe in Uelzen, Gifhorn, Lüneburg, Celle und dem Heidekreis — persönlich vor Ort oder per Video. Die Region, in der man lebt, kennt man eben am besten.'],
+  /* Wie anfangen */
+  [/wie.*anfang|wo.*anfang|erst.*schritt|einstieg|nicht.*wiss.*wo/i,'Am besten fangen Sie mit dem kostenlosen Schnellcheck an — drei Fragen, direkte Einordnung, kein Aufwand. Dann wissen Sie, wo Sie stehen. Wenn Sie danach konkrete Fragen haben, bin ich per E-Mail erreichbar. Kein Verkaufsdruck, versprochen.'],
+  /* Aufwand / Dauer */
+  [/aufwand|dauer|wie lang|wie viel zeit|schnell/i,'Der Schnellcheck dauert zwei Minuten. Der vollständige KI Pass — je nach Anzahl Ihrer Tools — etwa 20 bis 40 Minuten. Sie füllen ihn einmal aus, erhalten exportfertige Dokumente und müssen sich erstmal keine Gedanken mehr machen. Wenn sich bei Ihnen etwas ändert, kann man ihn jederzeit aktualisieren.'],
+  /* Beratung / Kontakt */
+  [/beratung|gespräch|termin|kontakt|schreib|mail|telefon|anruf/i,'Sehr gerne. Das Erstgespräch ist ohne Berechnung — wir schauen gemeinsam, was bei Ihnen konkret ansteht und ob ich helfen kann. Schreiben Sie mir an amen1@t-online.de oder nutzen Sie das Kontaktformular. Ich antworte in der Regel innerhalb eines Werktages.'],
+  /* Datenschutz KI-Tools */
+  [/sicher|vertrauen|daten.*weg|training.*daten|ki.*lernt|gespeichert/i,'Eine berechtigte Sorge. Die meisten KI-Anbieter trainieren ihre Modelle mit den eingegebenen Daten — es sei denn, Sie deaktivieren das aktiv. Bei ChatGPT heißt die Einstellung "Modelltraining" unter Datenschutz. Der KI Pass weist Sie genau auf solche Punkte hin und dokumentiert, was Sie eingestellt haben.'],
+  /* Zukunft / Nächste Tools */
+  [/zukunft|geplant|demnächst|was kommt|nächste/i,'Aktuell gibt es den KI Pass und den kostenlosen Schnellcheck. In Entwicklung sind der Content Planer für Social Media und der Website-Check. Wenn Sie auf dem Laufenden bleiben möchten, tragen Sie sich einfach über das Kontaktformular ein — ich schreibe Ihnen, wenn etwas Neues verfügbar ist.'],
+  /* Allgemein KI */
+  [/ki|künstliche intelligenz|artificial intelligence|ai\b/i,'KI ist längst kein Zukunftsthema mehr — auch kleine Betriebe ohne IT-Abteilung nutzen sie täglich. Die Frage ist nicht ob, sondern wie: sicher, datenschutzkonform und so, dass es wirklich Zeit spart. Genau dabei helfe ich.'],
 ];
 function sendChat(){
   const inp=document.getElementById('chat-in');
