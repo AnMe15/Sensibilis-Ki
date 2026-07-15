@@ -3022,7 +3022,7 @@ rd();step(1);
         <div class="chk-item" onclick="chkToggle(this,1)"><div class="chk-box"></div><div class="chk-label">Ich wei&szlig;, welche KI-Tools meine Mitarbeiter gesch&auml;ftlich nutzen.</div></div>
         <div class="chk-item" onclick="chkToggle(this,1)"><div class="chk-box"></div><div class="chk-label">Wir haben eine interne Regelung, was erlaubt ist und was nicht.</div></div>
         <div class="chk-item" onclick="chkToggle(this,1)"><div class="chk-box"></div><div class="chk-label">Ich wei&szlig;, ob unsere Tools personenbezogene Daten verarbeiten.</div></div>
-        <div style="margin-top:24px;text-align:right;"><button id="chk-next-1" class="btn btn-red" onclick="chkNextSection(2)" style="display:none;">Weiter &rarr;</button></div>
+        <div style="margin-top:24px;text-align:right;"><button class="btn btn-red" onclick="chkNextSection(2)">Weiter &rarr;</button></div>
       </div>
 
       <!-- Abschnitt 2 -->
@@ -3032,7 +3032,7 @@ rd();step(1);
         <div class="chk-item" onclick="chkToggle(this,2)"><div class="chk-box"></div><div class="chk-label">Kundendaten werden nicht ungep&uuml;ft in KI-Tools wie ChatGPT eingegeben.</div></div>
         <div class="chk-item" onclick="chkToggle(this,2)"><div class="chk-box"></div><div class="chk-label">Wir nutzen KI-Tools mit DSGVO-konformen Einstellungen.</div></div>
         <div class="chk-item" onclick="chkToggle(this,2)"><div class="chk-box"></div><div class="chk-label">Es gibt eine klare Ansprechperson f&uuml;r Datenschutzfragen im Betrieb.</div></div>
-        <div style="margin-top:24px;text-align:right;"><button id="chk-next-2" class="btn btn-red" onclick="chkNextSection(3)" style="display:none;">Weiter &rarr;</button></div>
+        <div style="margin-top:24px;text-align:right;"><button class="btn btn-red" onclick="chkNextSection(3)">Weiter &rarr;</button></div>
       </div>
 
       <!-- Abschnitt 3 -->
@@ -3042,6 +3042,7 @@ rd();step(1);
         <div class="chk-item" onclick="chkToggle(this,3)"><div class="chk-box"></div><div class="chk-label">Ich wei&szlig;, in welche Risikoklasse unsere KI-Nutzung f&auml;llt.</div></div>
         <div class="chk-item" onclick="chkToggle(this,3)"><div class="chk-box"></div><div class="chk-label">KI-generierte Inhalte auf unserer Website oder im Marketing sind als solche erkennbar.</div></div>
         <div class="chk-item" onclick="chkToggle(this,3)"><div class="chk-box"></div><div class="chk-label">Wir dokumentieren unsere KI-Nutzung &mdash; strukturiert und nachvollziehbar.</div></div>
+        <div style="margin-top:24px;text-align:right;"><button class="btn btn-red" onclick="chkShowResult(chkScore[0]+chkScore[1]+chkScore[2])">Ergebnis anzeigen &rarr;</button></div>
       </div>
 
       <!-- Ergebnis -->
@@ -3419,15 +3420,7 @@ function handleForm(e){
 var chkScore=[0,0,0];
 function chkToggle(el,sec){
   el.classList.toggle('checked');
-  var items=document.querySelectorAll('#chk-sec-'+sec+' .chk-item');
-  var done=document.querySelectorAll('#chk-sec-'+sec+' .chk-item.checked').length;
-  chkScore[sec-1]=done;
-  var btn=document.getElementById('chk-next-'+sec);
-  if(btn){btn.style.display=done===items.length?'inline-flex':'none';}
-  if(sec===3&&done===items.length){
-    document.getElementById('chk-step-3').style.background='#B8924A';
-    chkShowResult(chkScore[0]+chkScore[1]+chkScore[2]);
-  }
+  chkScore[sec-1]=document.querySelectorAll('#chk-sec-'+sec+' .chk-item.checked').length;
 }
 function chkNextSection(sec){
   document.getElementById('chk-sec-'+(sec-1)).style.display='none';
