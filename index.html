@@ -618,6 +618,16 @@ footer{background:var(--ink);padding:56px 48px 32px;}
   font-size:16px;cursor:pointer;transition:background .2s;}
 .chat-input-row button:hover{background:var(--c-d);}
 
+/* ══ CHECKLISTE ══════════════════════════════════════════════ */
+.chk-item{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;border:1px solid rgba(13,28,63,.12);border-radius:4px;margin-bottom:10px;cursor:pointer;transition:background .2s,border-color .2s;background:#fff;}
+.chk-item:hover{border-color:var(--g);background:rgba(184,146,74,.04);}
+.chk-item.checked{border-color:var(--g);background:rgba(184,146,74,.06);}
+.chk-box{width:20px;height:20px;min-width:20px;border:2px solid rgba(13,28,63,.2);border-radius:3px;transition:all .2s;position:relative;margin-top:2px;}
+.chk-item.checked .chk-box{background:var(--g);border-color:var(--g);}
+.chk-item.checked .chk-box::after{content:'';position:absolute;left:5px;top:1px;width:6px;height:11px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg);}
+.chk-label{font-size:15px;color:var(--txt);line-height:1.5;}
+.chk-item.checked .chk-label{color:var(--n);font-weight:500;}
+
 /* ══ PHASENMODELL ════════════════════════════════════════════ */
 .phase-strip{
   background:var(--n);padding:80px 48px;
@@ -855,7 +865,8 @@ footer{background:var(--ink);padding:56px 48px 32px;}
         </div>
       </div>
       <div style="text-align:center;padding-bottom:64px;border-bottom:1px solid rgba(13,28,63,.08);">
-        <p style="font-family:Georgia,serif;font-size:clamp(20px,2.5vw,28px);font-style:italic;color:var(--n);margin:0;">Genau daf&uuml;r gibt es <em style="font-style:normal;color:var(--c);">S</em>ensibilis.</p>
+        <p style="font-family:Georgia,serif;font-size:clamp(20px,2.5vw,28px);font-style:italic;color:var(--n);margin:0 0 28px;">Genau daf&uuml;r gibt es <em style="font-style:normal;color:var(--c);">S</em>ensibilis.</p>
+        <button class="btn btn-out" onclick="nav('checkliste')" style="border-color:var(--n);color:var(--n);">2-Minuten-Selbstcheck starten &rarr;</button>
       </div>
     </div>
   </section>
@@ -2983,6 +2994,68 @@ rd();step(1);
   </footer>
 </div>
 
+<!-- ══ PAGE: CHECKLISTE ═════════════════════════════════════ -->
+<div class="page" id="page-checkliste">
+  <div class="page-header">
+    <div class="page-header-bg" style="background:linear-gradient(135deg,#070F28 0%,#0D1C3F 60%,#B8924A 100%);"></div>
+    <div class="page-header-overlay"></div>
+    <div class="page-header-content">
+      <div class="page-header-eyebrow">Selbstcheck</div>
+      <h1>Ist Ihr Betrieb<br><em>EU AI Act konform?</em></h1>
+      <p>9 Fragen. 2 Minuten. Sofortiges Ergebnis &mdash; ohne Anmeldung.</p>
+    </div>
+  </div>
+  <div class="content-block">
+    <div style="max-width:780px;margin:0 auto;">
+      <p style="font-size:16px;color:var(--txt2);line-height:1.75;margin-bottom:40px;">Nutzen Sie KI in Ihrem Betrieb &mdash; oder planen es? Dann gilt der EU AI Act auch f&uuml;r Sie. Klicken Sie alle Punkte an, die in Ihrem Unternehmen bereits umgesetzt sind.</p>
+
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:44px;">
+        <div style="flex:1;height:4px;background:rgba(13,28,63,.1);border-radius:2px;overflow:hidden;">
+          <div id="chk-bar" style="height:100%;width:0%;background:var(--g);border-radius:2px;transition:width .4s ease;"></div>
+        </div>
+        <div id="chk-count" style="font-size:13px;font-weight:700;color:var(--g);min-width:40px;text-align:right;">0 / 9</div>
+      </div>
+
+      <div style="margin-bottom:36px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:16px;">Abschnitt 1 &mdash; Bestandsaufnahme</div>
+        <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">Ich wei&szlig;, welche KI-Tools meine Mitarbeiter gesch&auml;ftlich nutzen.</div></div>
+        <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">Wir haben eine interne Regelung, was erlaubt ist und was nicht.</div></div>
+        <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">Ich wei&szlig;, ob unsere Tools personenbezogene Daten verarbeiten.</div></div>
+      </div>
+
+      <div style="margin-bottom:36px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:16px;">Abschnitt 2 &mdash; Datenschutz &amp; DSGVO</div>
+        <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">Kundendaten werden nicht ungep&uuml;ft in KI-Tools wie ChatGPT eingegeben.</div></div>
+        <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">Wir nutzen KI-Tools mit DSGVO-konformen Einstellungen.</div></div>
+        <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">Es gibt eine klare Ansprechperson f&uuml;r Datenschutzfragen im Betrieb.</div></div>
+      </div>
+
+      <div style="margin-bottom:44px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:16px;">Abschnitt 3 &mdash; EU AI Act</div>
+        <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">Ich wei&szlig;, in welche Risikoklasse unsere KI-Nutzung f&auml;llt.</div></div>
+        <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">KI-generierte Inhalte auf unserer Website oder im Marketing sind als solche erkennbar.</div></div>
+        <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">Wir dokumentieren unsere KI-Nutzung &mdash; strukturiert und nachvollziehbar.</div></div>
+      </div>
+
+      <div id="chk-result" style="display:none;opacity:0;border-radius:6px;padding:32px 36px;margin-bottom:28px;border-left:4px solid;transition:opacity .4s ease;">
+        <div id="chk-res-head" style="font-family:Georgia,serif;font-size:22px;font-weight:normal;margin-bottom:12px;"></div>
+        <div id="chk-res-text" style="font-size:15px;line-height:1.75;color:var(--txt2);"></div>
+      </div>
+
+      <div id="chk-cta" style="display:none;padding-bottom:16px;">
+        <button class="btn btn-red" onclick="nav('kontakt')">Erstgespr&auml;ch anfragen &rarr;</button>
+        <button class="btn btn-out" onclick="chkReset()" style="margin-left:12px;">Neu starten</button>
+      </div>
+    </div>
+  </div>
+  <footer style="background:var(--n);padding:28px 48px;">
+    <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;">
+      <div><div style="font-family:Georgia,serif;font-size:15px;color:rgba(243,237,227,.85);margin-bottom:4px;"><em style="font-style:italic;color:var(--c);">S</em>ensibilis &mdash; Annett Mende</div><div style="font-size:13px;color:rgba(243,237,227,.6);">Tel. <a href="tel:+495824965365" style="color:rgba(243,237,227,.6);">05824 965365</a></div></div>
+      <div style="font-size:13px;color:rgba(243,237,227,.65);"><a href="#" onclick="nav('impressum')" style="color:rgba(243,237,227,.65);">Impressum</a><span style="opacity:.4;">&nbsp;|&nbsp;</span><a href="#" onclick="nav('datenschutz')" style="color:rgba(243,237,227,.65);">Datenschutz</a><span style="opacity:.4;">&nbsp;|&nbsp;</span><a href="#" onclick="nav('agb')" style="color:rgba(243,237,227,.65);">AGB</a></div>
+    </div>
+  </footer>
+</div>
+
 <!-- ══ PAGE: IMPRESSUM ══════════════════════════════════════ -->
 <div class="page" id="page-impressum">
   <div class="page-header" style="min-height:200px;">
@@ -3242,7 +3315,8 @@ var SEO_META={
   'blog-4':{t:'Sensibilis — KI-Beratung für den Mittelstand in Niedersachsen | Bad Bodenteich',d:'Wer steckt hinter Sensibilis? KI-Beratung aus Bad Bodenteich für KMU in der Region Uelzen, Gifhorn und Niedersachsen — praxisnah, ohne Fachjargon.'},
   'blog':{t:'Blog & Insights | Sensibilis',d:'Praxisnahe Beiträge zu KI, EU AI Act und Datenschutz für kleine und mittlere Unternehmen — ohne Fachjargon.'},
   'kipass':{t:'KI Pass — DSGVO & EU AI Act Dokumentation | Sensibilis',d:'Der KI Pass dokumentiert alle KI-Einsätze strukturiert, exportfertig und EU AI Act konform. Jetzt für 39,− € testen.'},
-  'home':{t:'Sensibilis — KI-Services für Unternehmen | Annett Mende',d:'KI-Beratung, KI Pass und Content Planer für kleine und mittlere Unternehmen. DSGVO-konform, praxisnah, ohne Fachjargon.'}
+  'home':{t:'Sensibilis — KI-Services für Unternehmen | Annett Mende',d:'KI-Beratung, KI Pass und Content Planer für kleine und mittlere Unternehmen. DSGVO-konform, praxisnah, ohne Fachjargon.'},
+  'checkliste':{t:'EU AI Act Selbstcheck für Ihren Betrieb | Sensibilis',d:'Wo steht Ihr Betrieb beim EU AI Act? 9 Fragen, 2 Minuten, sofortiges Ergebnis — ohne Anmeldung. Jetzt prüfen.'}
 };
 function nav(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -3330,6 +3404,48 @@ function handleForm(e){
   e.preventDefault();
   document.getElementById('contact-success').style.display='block';
   e.target.reset();
+}
+
+/* ── CHECKLISTE ────────────────────────────────────────── */
+function chkToggle(el){
+  el.classList.toggle('checked');
+  chkUpdate();
+}
+function chkUpdate(){
+  var items=document.querySelectorAll('#page-checkliste .chk-item');
+  var checked=document.querySelectorAll('#page-checkliste .chk-item.checked').length;
+  document.getElementById('chk-bar').style.width=(checked/items.length*100)+'%';
+  document.getElementById('chk-count').textContent=checked+' / '+items.length;
+  if(checked===items.length){chkShowResult(checked);}
+}
+function chkShowResult(score){
+  var res=document.getElementById('chk-result');
+  var head=document.getElementById('chk-res-head');
+  var text=document.getElementById('chk-res-text');
+  if(score>=7){
+    res.style.background='rgba(47,89,67,.07)';res.style.borderLeftColor='#2F5943';
+    head.style.color='#2F5943';head.textContent='Gut aufgestellt.';
+    text.textContent='Sie haben bereits vieles im Griff. Für eine vollständige, prüfungssichere Dokumentation empfehle ich den KI Pass — er schließt die letzten Lücken und liefert ein exportfertiges Ergebnis.';
+  } else if(score>=4){
+    res.style.background='rgba(184,146,74,.07)';res.style.borderLeftColor='var(--g)';
+    head.style.color='var(--n)';head.textContent='Solide Basis — aber noch Lücken.';
+    text.textContent='Das ist normal. Die meisten Betriebe wissen, dass KI ein Thema ist — aber nicht genau, wo sie konkret stehen. Ein kurzes Gespräch zeigt, was fehlt und wie es sich schnell schließen lässt.';
+  } else {
+    res.style.background='rgba(140,26,42,.06)';res.style.borderLeftColor='var(--c)';
+    head.style.color='var(--c)';head.textContent='Handlungsbedarf — aber kein Grund zur Panik.';
+    text.textContent='Das geht den meisten kleinen Betrieben so. KI ist neu, die Regeln sind komplex. Genau dafür gibt es Sensibilis — Schritt für Schritt, ohne Fachjargon und ohne IT-Abteilung.';
+  }
+  res.style.display='block';
+  setTimeout(function(){res.style.opacity='1';},50);
+  document.getElementById('chk-cta').style.display='block';
+}
+function chkReset(){
+  document.querySelectorAll('#page-checkliste .chk-item').forEach(function(el){el.classList.remove('checked');});
+  document.getElementById('chk-bar').style.width='0%';
+  document.getElementById('chk-count').textContent='0 / 9';
+  var res=document.getElementById('chk-result');
+  res.style.opacity='0';res.style.display='none';
+  document.getElementById('chk-cta').style.display='none';
 }
 
 /* ── CHATBOT ───────────────────────────────────────────── */
