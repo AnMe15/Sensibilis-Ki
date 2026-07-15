@@ -721,6 +721,70 @@ document.addEventListener('DOMContentLoaded',function(){
   });
 });
 </script>
+<div id="juli-stempel" onclick="nav('kipass')">
+  <div class="js-label">JULI-SPECIAL</div>
+  <div class="js-main"><em>KI Pass</em><br>Juli</div>
+  <div class="js-free">nur 39,&minus;&thinsp;&euro;</div>
+</div>
+<div id="chat-widget">
+  <div id="chat-window" style="display:none;">
+    <div class="chat-header">
+      <span><em style="font-style:italic;color:var(--c);">S</em>ensibilis Assistent</span>
+      <button onclick="document.getElementById('chat-window').style.display='none'">&#x2715;</button>
+    </div>
+    <div id="chat-msgs" class="chat-msgs">
+      <div class="msg msg-bot">Hallo! Ich beantworte Ihre Fragen zu KI-Einf&uuml;hrung, dem KI Pass und unseren Services. Was m&ouml;chten Sie wissen?</div>
+    </div>
+    <div class="chat-input-row">
+      <input id="chat-in" type="text" placeholder="Ihre Frage..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()">&#x2192;</button>
+    </div>
+  </div>
+  <button id="chat-btn" onclick="var w=document.getElementById('chat-window');w.style.display=w.style.display===''||w.style.display==='none'?'flex':'none'" style="width:60px;height:60px;border-radius:50%;background:var(--c);border:none;box-shadow:0 4px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;transition:transform .2s,background .2s;">&#x1F4AC;</button>
+</div>
+<script>
+function nav(id){ window.location.href='sensibilis.html#'+id; }
+function closeMob(){ document.getElementById('mob-menu').classList.remove('open'); }
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('ham-btn').addEventListener('click',function(){
+    document.getElementById('mob-menu').classList.toggle('open');
+  });
+});
+function toggleFaq(btn){
+  var item=btn.closest('.faq-item');
+  var wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i){i.classList.remove('open');});
+  if(!wasOpen)item.classList.add('open');
+}
+function handleForm(e){
+  e.preventDefault();
+  var el=document.getElementById('contact-success');
+  if(el)el.style.display='block';
+  e.target.reset();
+}
+var kb=[
+  [/ki pass|tool|prueftool/i,'Der KI Pass ist unser Dokumentations-Tool fuer DSGVO & EU AI Act. Der Schnellcheck ist kostenlos, die Vollversion im Juli gratis. Einfach auf "KI Pass" klicken.'],
+  [/kosten|preis|kostenlos|gratis/i,'Im Juli ist die vollstaendige Professional-Version kostenlos — 30 Tage, alles inklusive. Danach 59 Euro einmalig oder dauerhaft kostenloser Schnellcheck.'],
+  [/dsgvo|datenschutz/i,'DSGVO und EU AI Act gelten auch fuer Unternehmen, die KI nur nutzen. Der KI Pass hilft Ihnen, alles korrekt zu dokumentieren.'],
+  [/beratung|gespraech|kontakt/i,'Sehr gerne! Schreiben Sie mir direkt unter amen1@t-online.de — ich antworte innerhalb von 24 Stunden.'],
+  [/wer|annett|sensibilis/i,'Ich bin Annett Mende — zertifizierte KI-Managerin und Gruenderin von Sensibilis. Ich begleite Unternehmen praxisnah in die KI-Welt.'],
+];
+function sendChat(){
+  var inp=document.getElementById('chat-in');
+  var q=inp.value.trim();if(!q)return;
+  var msgs=document.getElementById('chat-msgs');
+  msgs.innerHTML+='<div class="msg msg-user">'+q+'</div>';
+  inp.value='';
+  var match=kb.find(function(e){return e[0].test(q);});
+  var reply=match?match[1]:'Das beantworte ich am besten persoenlich — schreiben Sie mir an amen1@t-online.de.';
+  setTimeout(function(){
+    msgs.innerHTML+='<div class="msg msg-bot">'+reply+'</div>';
+    msgs.scrollTop=msgs.scrollHeight;
+  },500);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+</script>
 </body>
 </html>
+
 
