@@ -3043,7 +3043,7 @@ rd();step(1);
         <div class="chk-item" onclick="chkToggle(this,3)"><div class="chk-box"></div><div class="chk-label">Ich wei&szlig;, in welche Risikoklasse unsere KI-Nutzung f&auml;llt.</div></div>
         <div class="chk-item" onclick="chkToggle(this,3)"><div class="chk-box"></div><div class="chk-label">KI-generierte Inhalte auf unserer Website oder im Marketing sind als solche erkennbar.</div></div>
         <div class="chk-item" onclick="chkToggle(this,3)"><div class="chk-box"></div><div class="chk-label">Wir dokumentieren unsere KI-Nutzung &mdash; strukturiert und nachvollziehbar.</div></div>
-        <div style="margin-top:24px;text-align:right;"><button class="btn btn-red" onclick="chkShowResult(chkScore[0]+chkScore[1]+chkScore[2])">Ergebnis anzeigen &rarr;</button></div>
+        <div style="margin-top:24px;text-align:right;"><button class="btn btn-red" onclick="chkShowResult(document.querySelectorAll('#page-checkliste .chk-item.checked').length)">Ergebnis anzeigen &rarr;</button></div>
       </div>
 
       <!-- Ergebnis -->
