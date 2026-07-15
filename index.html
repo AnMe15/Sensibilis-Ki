@@ -3037,7 +3037,11 @@ rd();step(1);
         <div class="chk-item" onclick="chkToggle(this)"><div class="chk-box"></div><div class="chk-label">Wir dokumentieren unsere KI-Nutzung &mdash; strukturiert und nachvollziehbar.</div></div>
       </div>
 
-      <div id="chk-result" style="display:none;opacity:0;border-radius:6px;padding:32px 36px;margin-bottom:28px;border-left:4px solid;transition:opacity .4s ease;">
+      <div style="margin-bottom:28px;">
+        <button class="btn btn-red" onclick="chkShowResult(document.querySelectorAll('#page-checkliste .chk-item.checked').length)" style="width:100%;justify-content:center;">Ergebnis anzeigen &rarr;</button>
+      </div>
+
+      <div id="chk-result" style="display:none;opacity:0;border-radius:6px;padding:32px 36px;margin-bottom:28px;border-left:4px solid #ccc;transition:opacity .4s ease;">
         <div id="chk-res-head" style="font-family:Georgia,serif;font-size:22px;font-weight:normal;margin-bottom:12px;"></div>
         <div id="chk-res-text" style="font-size:15px;line-height:1.75;color:var(--txt2);"></div>
       </div>
@@ -3427,12 +3431,12 @@ function chkShowResult(score){
     head.style.color='#2F5943';head.textContent='Gut aufgestellt.';
     text.textContent='Sie haben bereits vieles im Griff. Für eine vollständige, prüfungssichere Dokumentation empfehle ich den KI Pass — er schließt die letzten Lücken und liefert ein exportfertiges Ergebnis.';
   } else if(score>=4){
-    res.style.background='rgba(184,146,74,.07)';res.style.borderLeftColor='var(--g)';
-    head.style.color='var(--n)';head.textContent='Solide Basis — aber noch Lücken.';
+    res.style.background='rgba(184,146,74,.07)';res.style.borderLeftColor='#B8924A';
+    head.style.color='#0D1C3F';head.textContent='Solide Basis — aber noch Lücken.';
     text.textContent='Das ist normal. Die meisten Betriebe wissen, dass KI ein Thema ist — aber nicht genau, wo sie konkret stehen. Ein kurzes Gespräch zeigt, was fehlt und wie es sich schnell schließen lässt.';
   } else {
-    res.style.background='rgba(140,26,42,.06)';res.style.borderLeftColor='var(--c)';
-    head.style.color='var(--c)';head.textContent='Handlungsbedarf — aber kein Grund zur Panik.';
+    res.style.background='rgba(140,26,42,.06)';res.style.borderLeftColor='#8C1A2A';
+    head.style.color='#8C1A2A';head.textContent='Handlungsbedarf — aber kein Grund zur Panik.';
     text.textContent='Das geht den meisten kleinen Betrieben so. KI ist neu, die Regeln sind komplex. Genau dafür gibt es Sensibilis — Schritt für Schritt, ohne Fachjargon und ohne IT-Abteilung.';
   }
   res.style.display='block';
