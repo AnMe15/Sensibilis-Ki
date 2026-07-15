@@ -3336,6 +3336,7 @@ function nav(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   var pg=document.getElementById('page-'+id);
   if(pg)pg.classList.add('active');
+  if(id==='checkliste')chkReset();
   document.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
     a.classList.toggle('active', a.dataset.page===id);
   });
