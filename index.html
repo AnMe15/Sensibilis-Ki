@@ -1778,9 +1778,69 @@ window.cpdStart=function(){
         <div id="sc2-routing" style="border-radius:6px;padding:18px 22px;margin-bottom:22px;"></div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
           <button onclick="sc2Reset()" style="background:transparent;color:var(--txt2);border:1px solid var(--bdr);padding:10px 20px;border-radius:4px;font-size:13px;cursor:pointer;font-family:inherit;">Neuer Check</button>
-          <button class="btn btn-red" onclick="nav('kontakt')">Vollst&auml;ndigen KI Pass anfragen &rarr;</button>
+          <button class="btn btn-red" onclick="kpDemoStart()">So sieht der KI Pass aus &rarr;</button>
         </div>
       </div>
+
+      <!-- ── KI Pass Live-Vorschau ─────────────────────────── -->
+      <div id="kp-demo" style="display:none;margin-top:36px;border:1px solid rgba(184,146,74,.35);border-radius:6px;overflow:hidden;">
+        <div style="background:var(--n);padding:14px 20px;display:flex;gap:8px;align-items:center;">
+          <div id="kp-tab-0" style="font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 14px;border-radius:2px;background:var(--g);color:var(--n);cursor:pointer;" onclick="kpScene(0)">1 · Erfassung</div>
+          <div id="kp-tab-1" style="font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 14px;border-radius:2px;background:rgba(184,146,74,.15);color:rgba(243,237,227,.5);cursor:pointer;" onclick="kpScene(1)">2 · Pr&uuml;fung</div>
+          <div id="kp-tab-2" style="font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 14px;border-radius:2px;background:rgba(184,146,74,.15);color:rgba(243,237,227,.5);cursor:pointer;" onclick="kpScene(2)">3 · Ergebnis</div>
+          <div style="margin-left:auto;font-size:11px;color:rgba(243,237,227,.4);">Vorschau &mdash; l&auml;uft automatisch</div>
+        </div>
+        <div style="background:#0a1628;padding:28px 24px;min-height:200px;">
+
+          <div id="kp-scene-0">
+            <div style="font-size:11px;color:rgba(184,146,74,.8);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;">KI-Tool erfassen</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(184,146,74,.2);border-radius:4px;padding:16px 18px;margin-bottom:10px;">
+              <div style="font-size:12px;color:rgba(243,237,227,.5);margin-bottom:6px;">Name des Tools</div>
+              <div id="kp-typing" style="font-size:15px;color:var(--iv);font-family:Georgia,serif;min-height:22px;"></div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(184,146,74,.2);border-radius:4px;padding:16px 18px;margin-bottom:10px;">
+              <div style="font-size:12px;color:rgba(243,237,227,.5);margin-bottom:6px;">Einsatzzweck</div>
+              <div id="kp-typing2" style="font-size:14px;color:rgba(243,237,227,.75);min-height:22px;"></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:14px;">
+              <div style="flex:1;height:3px;border-radius:2px;background:var(--g);"></div>
+              <div style="flex:1;height:3px;border-radius:2px;background:rgba(184,146,74,.2);"></div>
+              <div style="flex:1;height:3px;border-radius:2px;background:rgba(184,146,74,.2);"></div>
+            </div>
+          </div>
+
+          <div id="kp-scene-1" style="display:none;">
+            <div style="font-size:11px;color:rgba(184,146,74,.8);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;">DSGVO &amp; EU AI Act Pr&uuml;fung</div>
+            <div id="kp-checks" style="display:flex;flex-direction:column;gap:8px;"></div>
+          </div>
+
+          <div id="kp-scene-2" style="display:none;">
+            <div style="font-size:11px;color:rgba(184,146,74,.8);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;">Ihr Ergebnis</div>
+            <div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:20px;">
+              <div id="kp-res-circle" style="width:68px;height:68px;min-width:68px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;opacity:0;transition:opacity .6s;">
+                <span id="kp-res-num" style="font-family:Georgia,serif;font-size:24px;font-weight:700;line-height:1;"></span>
+                <span style="font-size:9px;letter-spacing:.05em;text-transform:uppercase;margin-top:2px;">Klasse</span>
+              </div>
+              <div style="padding-top:4px;">
+                <div id="kp-res-title" style="font-size:15px;font-weight:700;color:var(--iv);margin-bottom:5px;opacity:0;transition:opacity .6s .2s;"></div>
+                <div id="kp-res-desc" style="font-size:13px;color:rgba(243,237,227,.65);line-height:1.65;opacity:0;transition:opacity .6s .4s;"></div>
+              </div>
+            </div>
+            <div id="kp-res-doc" style="background:rgba(184,146,74,.08);border:1px solid rgba(184,146,74,.25);border-radius:4px;padding:14px 16px;opacity:0;transition:opacity .6s .6s;">
+              <div style="font-size:12px;font-weight:700;color:var(--g);margin-bottom:8px;">Exportfertige Dokumente</div>
+              <div style="font-size:12px;color:rgba(243,237,227,.6);">&#x2713;&nbsp; Verarbeitungsverzeichnis (Art. 30 DSGVO)</div>
+              <div style="font-size:12px;color:rgba(243,237,227,.6);margin-top:4px;">&#x2713;&nbsp; EU AI Act Einstufungsdokument</div>
+              <div style="font-size:12px;color:rgba(243,237,227,.6);margin-top:4px;">&#x2713;&nbsp; PDF-Export &mdash; prüfungsbereit</div>
+            </div>
+          </div>
+
+        </div>
+        <div style="background:var(--n);padding:16px 20px;border-top:1px solid rgba(184,146,74,.15);display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-size:12px;color:rgba(243,237,227,.45);">Das ist der echte KI Pass &mdash; kein Mockup.</div>
+          <button class="btn btn-red" onclick="nav('kontakt')" style="padding:10px 22px;">KI Pass anfragen &rarr;</button>
+        </div>
+      </div>
+
     </div>
     <script>
 (function(){
@@ -3439,6 +3499,79 @@ function chkReset(){
   var res=document.getElementById('chk-result');
   res.style.opacity='0';res.style.display='none';
   document.getElementById('chk-cta').style.display='none';
+}
+
+/* ── KI PASS DEMO ──────────────────────────────────────── */
+var kpTimer=null;
+function kpScene(i){
+  [0,1,2].forEach(function(n){
+    document.getElementById('kp-scene-'+n).style.display=n===i?'block':'none';
+    var tab=document.getElementById('kp-tab-'+n);
+    tab.style.background=n===i?'var(--g)':'rgba(184,146,74,.15)';
+    tab.style.color=n===i?'var(--n)':'rgba(243,237,227,.5)';
+  });
+}
+function kpType(elId,text,speed,cb){
+  var el=document.getElementById(elId);
+  if(!el)return;
+  el.textContent='';
+  var i=0;
+  var t=setInterval(function(){
+    el.textContent+=text[i];i++;
+    if(i>=text.length){clearInterval(t);if(cb)cb();}
+  },speed||60);
+}
+function kpDemoStart(){
+  var kl=document.getElementById('sc2-rn')?parseInt(document.getElementById('sc2-rn').textContent)||3:3;
+  var KL={1:{c:'#1a6b45',t:'Klasse 1 — Unkritisch',d:'Kaum rechtliche Hürden. Standard-Dokumentation genügt.'},
+          2:{c:'#2e7d32',t:'Klasse 2 — Intern',d:'Zugangsbeschränkung intern sinnvoll.'},
+          3:{c:'#B8842A',t:'Klasse 3 — Vertraulich',d:'AVV nach Art. 28 DSGVO notwendig.'},
+          4:{c:'#d4700a',t:'Klasse 4 — Streng vertraulich',d:'EU-Hosting empfohlen.'},
+          5:{c:'#c0392b',t:'Klasse 5 — Höchst sensibel',d:'Souveräne Lösung erforderlich.'}};
+  var k=KL[kl]||KL[3];
+  document.getElementById('kp-demo').style.display='block';
+  document.getElementById('kp-demo').scrollIntoView({behavior:'smooth',block:'start'});
+  kpScene(0);
+  document.getElementById('kp-typing').textContent='';
+  document.getElementById('kp-typing2').textContent='';
+  kpType('kp-typing','ChatGPT (OpenAI)',65,function(){
+    setTimeout(function(){
+      kpType('kp-typing2','Texterstellung, E-Mail-Entwürfe, Kundenanfragen',45,function(){
+        setTimeout(function(){
+          kpScene(1);
+          var checks=[
+            {t:'Auftragsverarbeitungsvertrag (AVV)',ok:true},
+            {t:'DSGVO-konforme Einstellungen aktiviert',ok:true},
+            {t:'Daten-Training deaktiviert',ok:false},
+            {t:'EU AI Act Risikoklasse bestimmt',ok:true},
+          ];
+          var c=document.getElementById('kp-checks');c.innerHTML='';
+          checks.forEach(function(ch,idx){
+            setTimeout(function(){
+              var d=document.createElement('div');
+              d.style.cssText='display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:3px;opacity:0;transition:opacity .4s;';
+              d.innerHTML='<span style="font-size:14px;color:'+(ch.ok?'#4caf50':'#ef5350')+';font-weight:700;">'+(ch.ok?'&#x2713;':'&#x2717;')+'</span><span style="font-size:13px;color:rgba(243,237,227,.75);">'+ch.t+'</span>';
+              c.appendChild(d);
+              setTimeout(function(){d.style.opacity='1';},50);
+            },idx*600);
+          });
+          setTimeout(function(){
+            kpScene(2);
+            document.getElementById('kp-res-circle').style.background=k.c;
+            document.getElementById('kp-res-num').textContent=kl;
+            document.getElementById('kp-res-title').textContent=k.t;
+            document.getElementById('kp-res-desc').textContent=k.d;
+            setTimeout(function(){
+              document.getElementById('kp-res-circle').style.opacity='1';
+              document.getElementById('kp-res-title').style.opacity='1';
+              document.getElementById('kp-res-desc').style.opacity='1';
+              setTimeout(function(){document.getElementById('kp-res-doc').style.opacity='1';},400);
+            },200);
+          },checks.length*600+800);
+        },600);
+      });
+    },400);
+  });
 }
 
 /* ── CHATBOT ───────────────────────────────────────────── */
