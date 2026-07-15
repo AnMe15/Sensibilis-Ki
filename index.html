@@ -3052,9 +3052,12 @@ rd();step(1);
         <div id="chk-res-text" style="font-size:15px;line-height:1.75;color:var(--txt2);"></div>
       </div>
 
-      <div id="chk-cta" style="display:none;padding-bottom:16px;">
-        <button class="btn btn-red" onclick="nav('kontakt')">Erstgespr&auml;ch anfragen &rarr;</button>
-        <button class="btn btn-out" onclick="chkReset()" style="margin-left:12px;">Neu starten</button>
+      <div id="chk-cta" style="display:none;padding-bottom:48px;">
+        <button class="btn btn-red" onclick="nav('kontakt')" style="width:100%;justify-content:center;margin-bottom:12px;">Erstgespr&auml;ch anfragen &rarr;</button>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:4px;">
+          <button class="btn btn-out" onclick="chkReset()">Neu starten</button>
+          <button class="btn btn-out" onclick="nav('home')">Zur&uuml;ck zur Website</button>
+        </div>
       </div>
 
     </div>
