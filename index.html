@@ -1024,6 +1024,45 @@ footer{background:var(--ink);padding:56px 48px 32px;}
     </div>
   </section>
 
+  <!-- Blog Teaser -->
+  <section style="background:var(--iv);padding:64px 48px;">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:32px;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:8px;">Aus dem Blog</div>
+          <div style="font-family:Georgia,serif;font-size:24px;color:var(--txt);font-weight:normal;">Wissen, das weiterhilft.</div>
+        </div>
+        <a href="#" onclick="nav('blog')" style="font-size:13px;font-weight:700;color:var(--g);text-decoration:none;white-space:nowrap;">Alle Artikel &rarr;</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+        <!-- Blog Card 1 -->
+        <article onclick="nav('blog-1')" style="background:#fff;border-radius:8px;overflow:hidden;cursor:pointer;transition:box-shadow .25s,transform .25s;display:flex;flex-direction:column;" onmouseover="this.style.boxShadow='0 12px 40px rgba(22,10,13,.18)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+          <div style="height:160px;background:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=200&fit=crop&q=80') center/cover;position:relative;">
+            <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(13,28,63,.55) 100%);"></div>
+            <div style="position:absolute;top:12px;left:12px;background:var(--n);color:var(--g);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:3px;">EU AI Act</div>
+          </div>
+          <div style="padding:20px;flex:1;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:11px;color:var(--txt2);">Juli 2026 &nbsp;&middot;&nbsp; 5 Min.</div>
+            <div style="font-family:Georgia,serif;font-size:17px;color:var(--txt);line-height:1.35;font-weight:normal;">Was der EU AI Act f&uuml;r kleine Unternehmen bedeutet</div>
+            <div style="font-size:12px;font-weight:700;color:var(--c);margin-top:auto;padding-top:8px;">Weiterlesen &rarr;</div>
+          </div>
+        </article>
+        <!-- Blog Card 2 -->
+        <article onclick="nav('blog-2')" style="background:#fff;border-radius:8px;overflow:hidden;cursor:pointer;transition:box-shadow .25s,transform .25s;display:flex;flex-direction:column;" onmouseover="this.style.boxShadow='0 12px 40px rgba(22,10,13,.18)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+          <div style="height:160px;background:url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=200&fit=crop&q=80') center/cover;position:relative;">
+            <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(13,28,63,.55) 100%);"></div>
+            <div style="position:absolute;top:12px;left:12px;background:var(--n);color:var(--g);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:3px;">Praxis</div>
+          </div>
+          <div style="padding:20px;flex:1;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:11px;color:var(--txt2);">Juni 2026 &nbsp;&middot;&nbsp; 6 Min.</div>
+            <div style="font-family:Georgia,serif;font-size:17px;color:var(--txt);line-height:1.35;font-weight:normal;">KI im Alltag: Diese 5 Tools sparen wirklich Zeit</div>
+            <div style="font-size:12px;font-weight:700;color:var(--c);margin-top:auto;padding-top:8px;">Weiterlesen &rarr;</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- Home Footer -->
   <footer style="background:var(--n);padding:28px 48px;">
     <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;">
