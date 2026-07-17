@@ -321,8 +321,8 @@ nav{
 }
 
 /* ══ PAGE ROUTER ═════════════════════════════════════════════ */
-.page{display:none;}
-.page.active{display:block;}
+.page{position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;pointer-events:none;}
+.page.active{position:static;left:auto;top:auto;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal;pointer-events:auto;}
 
 /* ══ HEADER BILD BEREICHE ════════════════════════════════════ */
 .page-header{
@@ -773,14 +773,6 @@ footer{background:var(--ink);padding:56px 48px 32px;}
   .ref-grid{grid-template-columns:1fr;}
   .promo-box{padding:28px 24px;}
 }
-@media(max-width:680px){
-  [style*="grid-template-columns:1fr 1fr"],[style*="grid-template-columns:1.1fr 1fr"],[style*="grid-template-columns:1fr 1.1fr"]{grid-template-columns:1fr!important;}
-  [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr!important;}
-  .split{grid-template-columns:1fr!important;}
-  .contact-grid{grid-template-columns:1fr!important;gap:32px!important;}
-  .split-section-home{grid-template-columns:1fr!important;}
-  .content-block{padding:48px 20px!important;}
-}
 </style>
 <script type="application/ld+json">
 {
@@ -1119,6 +1111,10 @@ footer{background:var(--ink);padding:56px 48px 32px;}
           <div style="width:36px;height:36px;border-radius:50%;background:var(--c);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:#fff;">&#x2192;</div>
           <div style="flex:1;"><div style="font-size:14px;color:var(--n);font-family:Georgia,serif;margin-bottom:8px;">30 Min. Erstgespr&auml;ch &mdash; kostenlos</div>
           <button class="btn btn-red" onclick="nav('kontakt')" style="font-size:12px;padding:9px 18px;">Jetzt anfragen &rarr;</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
         </div>
       </div>
     </div>
@@ -1816,7 +1812,7 @@ window.cpdStart=function(){
       <p>Der KI Pass erfasst alle KI-Eins&auml;tze in Ihrem Unternehmen &mdash; strukturiert, exportfertig und EU AI Act konform.</p>
     </div>
   </div>
-  <div style="background:var(--c);padding:20px 48px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+  <div style="background:var(--c);padding:20px 48px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
     <div>
       <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,237,227,.7);">Juli-Special 2026</span>
       <div style="font-family:Georgia,serif;font-size:20px;color:var(--iv);margin-top:4px;"><em>KI Pass Professional</em> &mdash; statt 59,&minus;&thinsp;&euro; im Juli nur 39,&minus;&thinsp;&euro;</div>
@@ -2140,7 +2136,7 @@ rd();step(1);
         <div style="font-family:Georgia,serif;font-size:52px;color:var(--iv);line-height:1;margin-bottom:6px;">490 &euro;</div>
         <div style="font-size:13px;color:rgba(243,237,227,.7);margin-bottom:24px;">einmalig &mdash; inkl. 12 Monate Hosting</div>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
-          <li style="font-size:14px;color:rgba(243,237,227,.9);padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--g);">&#x2713;</span> Einrichtung auf Ihr Unternehmen</li>
+          <li style="font-size:14px;color:rgba(243,237,227,.9);padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--g);">&#x2713;</span> Einrichtung auf dein Unternehmen</li>
           <li style="font-size:14px;color:rgba(243,237,227,.9);padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--g);">&#x2713;</span> Redaktionsplan &amp; Saisonkalender</li>
           <li style="font-size:14px;color:rgba(243,237,227,.9);padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--g);">&#x2713;</span> Social Media Texte auf Knopfdruck</li>
           <li style="font-size:14px;color:rgba(243,237,227,.9);padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--g);">&#x2713;</span> Alle Branchen &amp; Kan&auml;le</li>
@@ -2161,42 +2157,10 @@ rd();step(1);
           <li>Pers&ouml;nliche Begleitung</li>
           <li>Kein Stundensatz &mdash; Festpreis</li>
         </ul>
-        <button class="btn btn-red" style="width:100%;justify-content:center;white-space:nowrap;" onclick="nav('kontakt')">Angebot anfragen</button>
+        <button class="btn btn-red" style="width:100%;justify-content:center;white-space:nowrap;" onclick="nav('beratung')">Angebot anfragen</button>
       </div>
 
     </div>
-    <!-- Kecker Preisseiten-Footer -->
-    <section style="background:linear-gradient(to bottom,var(--iv) 0%,#e8e0d4 100%);padding:48px 24px;border-top:1px solid var(--bdr);margin-top:0;">
-      <div style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
-        <div>
-          <p style="font-family:Georgia,serif;font-size:22px;color:var(--txt);line-height:1.45;margin-bottom:20px;">Wann haben Sie zuletzt etwas gekauft, das wirklich das gekostet hat was draufstand?</p>
-          <p style="font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:24px;">Wir wissen: Im Internet steht &uuml;berall &bdquo;transparent&ldquo; &mdash; und dann kommt die zweite Rechnung. Deshalb stehen unsere Preise oben auf dieser Seite. Keine Upsells, keine Pflichtpakete, kein &bdquo;erst nach dem Gespr&auml;ch&ldquo;.</p>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <button class="btn btn-red" onclick="nav('kontakt')" style="font-size:13px;padding:10px 20px;">Erstgespr&auml;ch anfragen &rarr;</button>
-            <button class="btn" onclick="nav('faq')" style="font-size:13px;padding:10px 20px;background:transparent;color:var(--n);border:1px solid var(--n);">Noch Fragen? &rarr;</button>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="width:20px;min-width:20px;height:20px;border-radius:50%;background:var(--n);display:flex;align-items:center;justify-content:center;margin-top:2px;"><span style="color:#fff;font-size:11px;font-weight:700;">&#x2713;</span></div>
-            <p style="font-size:14px;color:var(--txt);line-height:1.6;margin:0;">Alle Preise sind Endpreise &mdash; keine versteckten Geb&uuml;hren</p>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="width:20px;min-width:20px;height:20px;border-radius:50%;background:var(--n);display:flex;align-items:center;justify-content:center;margin-top:2px;"><span style="color:#fff;font-size:11px;font-weight:700;">&#x2713;</span></div>
-            <p style="font-size:14px;color:var(--txt);line-height:1.6;margin:0;">Einmalkauf &mdash; kein Abo, keine monatliche Pflicht</p>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="width:20px;min-width:20px;height:20px;border-radius:50%;background:var(--n);display:flex;align-items:center;justify-content:center;margin-top:2px;"><span style="color:#fff;font-size:11px;font-weight:700;">&#x2713;</span></div>
-            <p style="font-size:14px;color:var(--txt);line-height:1.6;margin:0;">Beratungspreise: individuell, aber immer als Festpreis &mdash; kein offenes Stundenende</p>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="width:20px;min-width:20px;height:20px;border-radius:50%;background:var(--n);display:flex;align-items:center;justify-content:center;margin-top:2px;"><span style="color:#fff;font-size:11px;font-weight:700;">&#x2713;</span></div>
-            <p style="font-size:14px;color:var(--txt);line-height:1.6;margin:0;">Erstgespr&auml;ch kostenlos &mdash; ohne Kaufdruck, ohne Folgetermin-Pflicht</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <div class="page-nav-links"><a href="#" onclick="nav('kipass')">KI Pass ausprobieren</a><a href="#" onclick="nav('tools')">Alle Tools</a><a href="#" onclick="nav('kontakt')">Fragen? Kontakt aufnehmen</a></div>
   </div>
   <footer class="footer-mini">
@@ -2268,23 +2232,6 @@ rd();step(1);
         <div style="font-family:Georgia,serif;font-size:52px;color:var(--n);opacity:.55;line-height:1;margin-bottom:18px;">03</div>
         <h3 style="font-family:Georgia,serif;font-weight:normal;font-size:20px;color:var(--txt);margin-bottom:12px;">Begleitung &amp; Umsetzung</h3>
         <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Ich bleibe dabei &mdash; bei der Einf&uuml;hrung, beim Team, bei Fragen, die erst sp&auml;ter auftauchen.</p>
-      </div>
-    </div>
-
-    <!-- Bild-Statement-Block -->
-    <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:0;margin:0 -48px 72px;border-radius:8px;overflow:hidden;box-shadow:0 8px 40px rgba(13,28,63,.18);">
-      <div style="position:relative;min-height:480px;overflow:hidden;">
-        <img src="img/annett-mende-ki.jpg" alt="Annett Mende und KI auf Augenhöhe" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-        <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--n) 100%);"></div>
-      </div>
-      <div style="background:var(--n);padding:56px 48px;display:flex;flex-direction:column;justify-content:center;">
-        <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:20px;display:block;">Mein Ansatz</span>
-        <h2 style="font-family:Georgia,serif;font-weight:normal;font-size:clamp(28px,3vw,42px);color:var(--iv);line-height:1.2;margin-bottom:24px;">KI auf<br><em>Augenh&ouml;he.</em></h2>
-        <p style="font-size:15px;color:rgba(243,237,227,.75);line-height:1.8;margin-bottom:16px;">KI ist kein Werkzeug das man einfach einschaltet. Es ist ein System das man versteht &mdash; und dann gemeinsam mit dem Team zum Laufen bringt.</p>
-        <p style="font-size:15px;color:rgba(243,237,227,.75);line-height:1.8;margin-bottom:36px;">Genau das ist meine Arbeit: zwischen Mensch und KI vermitteln, bis beides zusammen funktioniert.</p>
-        <div style="width:48px;height:2px;background:var(--g);margin-bottom:28px;"></div>
-        <div style="font-family:Georgia,serif;font-size:13px;font-style:italic;color:rgba(243,237,227,.5);">Annett Mende &mdash; Zertifizierte KI-Managerin</div>
-        <button class="btn btn-red" onclick="nav('kontakt')" style="margin-top:36px;align-self:flex-start;">Erstgespr&auml;ch anfragen &rarr;</button>
       </div>
     </div>
 
@@ -2436,7 +2383,6 @@ rd();step(1);
             <textarea rows="4" placeholder="Womit kann ich Ihnen helfen?" style="width:100%;padding:12px 16px;border:1px solid var(--bdr);background:var(--bg2);font-size:14px;color:var(--txt);outline:none;resize:vertical;"></textarea>
           </div>
           <button class="btn btn-red" type="submit">Nachricht senden &rarr;</button>
-          <div style="padding:14px 18px;background:rgba(184,146,74,.1);border:1px solid rgba(184,146,74,.35);border-radius:4px;font-size:13px;color:var(--txt2);line-height:1.6;"><strong style="color:var(--n);">Hinweis:</strong> Das Formular ist noch nicht aktiv &mdash; bitte schreiben Sie mir direkt an <a href="mailto:amen1@t-online.de" style="color:var(--c);font-weight:600;">amen1@t-online.de</a> oder rufen Sie an: <a href="tel:+495824965365" style="color:var(--c);font-weight:600;">05824 965365</a>.</div>
           <div id="contact-success" style="display:none;padding:16px;background:#edf7ed;border:1px solid #9dc89d;font-size:14px;color:#2d6a2d;">Vielen Dank! Ich melde mich innerhalb von 24 Stunden.</div>
         </form>
       </div>
@@ -3072,227 +3018,197 @@ rd();step(1);
   </div>
   <div class="content-block">
 
-    <!-- Kategorie 1: KI & Einstieg -->
+    <!-- Kategorie 1 -->
     <div class="sec-hd">
-      <span class="eyebrow">KI &amp; Einstieg</span>
-      <h2>Was KI wirklich ist &mdash; und was nicht.</h2>
+      <span class="eyebrow">KI &amp; Technologie</span>
+      <h2>Die Grundbegriffe.</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:32px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:56px;">
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">K&uuml;nstliche Intelligenz (KI)</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Software, die Aufgaben &uuml;bernimmt die bisher Menschen vorbehalten waren: Texte schreiben, Daten auswerten, Entscheidungen vorbereiten. Kein Zaubertrick &mdash; aber ein echtes Werkzeug.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Systeme, die menschliche Denkprozesse wie Lernen, Schlussfolgern oder Entscheiden automatisiert nachahmen.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Generative KI</div>
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Large Language Model (LLM)</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI die neue Inhalte erstellt &mdash; Texte, Bilder, Code. ChatGPT, Copilot und Gemini sind die bekanntesten Vertreter. Genau das, was kleine Betriebe t&auml;glich einsetzen k&ouml;nnen.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI-Modell das auf riesigen Textmengen trainiert wurde und Sprache versteht und erzeugt. Basis von ChatGPT, Copilot &amp; Co.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Prompt</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Die Anweisung, die Sie an ein KI-System geben. Wer gut promptet, bekommt gute Ergebnisse. Wer schlecht promptet, bekommt Schr&ouml;tt. Der Unterschied macht die Begleitung.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Die Eingabe oder Anweisung, die ein Nutzer an ein KI-System gibt.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Assistent</div>
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Generative KI</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI-Tool das Mitarbeitende bei t&auml;glichen Aufgaben unterst&uuml;tzt: E-Mails, Protokolle, Social-Media-Posts, Recherche. Kein Ersatz f&uuml;r Menschen &mdash; aber ein echter Zeitgewinn.</p>
-      </div>
-      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Halluzination</div>
-        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Wenn KI selbstbewusst falsche Antworten liefert &mdash; ohne es zu wissen. Deshalb braucht KI immer menschliche Kontrolle. Wer das kennt, nutzt KI sicher.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI, die neue Inhalte erzeugt: Texte, Bilder, Code oder Audio.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Automatisierung</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Wiederkehrende Aufgaben einmal einrichten &mdash; KI erledigt sie dann selbst&auml;ndig. Im Betrieb: Terminbest&auml;tigungen, Reportings, Textvarianten, Auswertungen. Das ist der echte Zeitgewinn.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Einsatz von KI zur selbst&auml;ndigen Ausf&uuml;hrung wiederkehrender Aufgaben im Betrieb.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Modell</div>
+        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Das trainierte System hinter einem KI-Tool &mdash; vergleichbar mit dem Motor eines Autos.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Chatbot</div>
+        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Programm, das automatisiert auf Nachrichten antwortet. Mit KI wird er deutlich leistungsf&auml;higer.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Assistent</div>
+        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI-Tool das Mitarbeitende bei t&auml;glichen Aufgaben unterst&uuml;tzt &mdash; z.B. Texte schreiben, E-Mails formulieren, Daten auswerten.</p>
       </div>
     </div>
-    <div style="background:linear-gradient(135deg,rgba(140,26,42,.06) 0%,rgba(13,28,63,.04) 100%);border-left:3px solid var(--c);border-radius:4px;padding:18px 24px;margin-bottom:56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <p style="font-size:14px;color:var(--txt);margin:0;"><strong>Nicht sicher wo Sie anfangen sollen?</strong> Genau daf&uuml;r gibt es das kostenlose Erstgespr&auml;ch.</p>
-      <button class="btn btn-red" onclick="nav('kontakt')" style="font-size:13px;padding:10px 20px;white-space:nowrap;">Erstgespr&auml;ch anfragen &rarr;</button>
-    </div>
 
-    <!-- Kategorie 2: EU AI Act -->
+    <!-- Kategorie 2 -->
     <div class="sec-hd">
       <span class="eyebrow">EU AI Act</span>
-      <h2>Was das Gesetz von Ihnen verlangt.</h2>
+      <h2>Recht &amp; Compliance.</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:32px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:56px;">
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--n);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">EU AI Act</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Europ&auml;isches Gesetz zur Regulierung von KI, g&uuml;ltig seit August 2024. Gilt f&uuml;r jedes Unternehmen in der EU das KI einsetzt &mdash; egal wie klein.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Europ&auml;isches Gesetz zur Regulierung von KI-Systemen, in Kraft seit August 2024. Gilt f&uuml;r alle Unternehmen die KI in der EU einsetzen.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--n);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Risikoklasse</div>
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Nutzer</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Der EU AI Act stuft KI in vier Klassen ein: minimales, begrenztes, hohes und inakzeptables Risiko. Die meisten Tools kleiner Betriebe fallen in &bdquo;minimal&ldquo; oder &bdquo;begrenzt&ldquo;.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Wer ein KI-System im beruflichen Kontext einsetzt &mdash; unabh&auml;ngig ob selbst entwickelt oder zugekauft.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--n);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Hochrisiko-KI</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI-Systeme mit erh&ouml;hten Anforderungen &mdash; z.&thinsp;B. bei Personalentscheidungen, Kreditvergabe oder Sicherheitstechnik. F&uuml;r diese gilt ein eigenes Modul im KI Pass mit erweiterter Dokumentationspflicht.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI-Systeme mit erh&ouml;htem Gef&auml;hrdungspotenzial, z.B. in HR, Bildung oder kritischer Infrastruktur. Unterliegen strengen Auflagen.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--n);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Dokumentationspflicht</div>
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Risikoklasse</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Alle eingesetzten KI-Tools m&uuml;ssen schriftlich erfasst sein: welches Tool, wof&uuml;r, wie. Das ist keine Empfehlung &mdash; das ist Pflicht. Genau das l&ouml;st der KI Pass.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Der EU AI Act teilt KI-Systeme in vier Klassen ein: minimales Risiko, begrenztes Risiko, hohes Risiko, inakzeptables Risiko.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--n);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Transparenzpflicht</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI-generierte Texte, Bilder und Videos m&uuml;ssen als solche gekennzeichnet werden. Gilt f&uuml;r Social Media, Website und Werbemittel.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Pflicht, KI-generierte Inhalte als solche zu kennzeichnen &mdash; gilt f&uuml;r Texte, Bilder, Videos und Audio.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--n);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Nutzer (laut Gesetz)</div>
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Dokumentation</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Wer ChatGPT, Copilot oder andere KI-Tools beruflich nutzt &mdash; ist im Sinne des EU AI Act KI-Nutzer und damit in der Pflicht. Das sind Sie.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Pflicht zur schriftlichen Erfassung aller eingesetzten KI-Systeme im Unternehmen &mdash; Grundlage des KI Passes.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--n);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI Pass</div>
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Konformit&auml;tsbewertung</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Das Sensibilis-Tool das Ihre KI-Dokumentationspflicht erf&uuml;llt: alle Tools erfassen, Risikoklassen zuordnen, Nachweise sichern &mdash; in unter 30 Minuten. Inkl. Hochrisiko-Modul f&uuml;r Systeme mit h&ouml;heren Anforderungen und PDF-Export f&uuml;r Beh&ouml;rden.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Pr&uuml;fverfahren, mit dem Unternehmen nachweisen, dass ihr KI-Einsatz den gesetzlichen Anforderungen entspricht.</p>
       </div>
-    </div>
-    <div style="background:linear-gradient(135deg,rgba(13,28,63,.06) 0%,rgba(13,28,63,.03) 100%);border-left:3px solid var(--n);border-radius:4px;padding:18px 24px;margin-bottom:56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <p style="font-size:14px;color:var(--txt);margin:0;"><strong>Schon konform?</strong> Der KI Pass erledigt Ihre Dokumentationspflicht nach EU AI Act in einem Schritt.</p>
-      <button class="btn" onclick="nav('kipass')" style="font-size:13px;padding:10px 20px;white-space:nowrap;background:var(--n);color:var(--iv);">Zum KI Pass &rarr;</button>
+      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--n);border-radius:2px;padding:20px 22px;">
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Verwendungszweck</div>
+        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Dokumentierter Einsatzzweck eines KI-Systems &mdash; Pflichtangabe nach EU AI Act.</p>
+      </div>
     </div>
 
-    <!-- Kategorie 3: DSGVO & Datenschutz -->
+    <!-- Kategorie 3 -->
     <div class="sec-hd">
       <span class="eyebrow">DSGVO &amp; Datenschutz</span>
-      <h2>Was KI mit Ihren Daten macht &mdash; und was nicht.</h2>
+      <h2>Daten &amp; Recht.</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:32px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:56px;">
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">DSGVO</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Datenschutz-Grundverordnung. Regelt wie personenbezogene Daten in der EU verarbeitet werden d&uuml;rfen &mdash; auch wenn Sie KI-Tools nutzen.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Datenschutz-Grundverordnung. Europ&auml;isches Gesetz zum Schutz personenbezogener Daten &mdash; gilt auch f&uuml;r KI-Einsatz.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Personenbezogene Daten</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Name, E-Mail, Telefonnummer, IP-Adresse &mdash; alles was eine Person identifizierbar macht. Diese Daten d&uuml;rfen nicht einfach in KI-Tools eingegeben werden.</p>
-      </div>
-      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Auftragsverarbeitung (AVV)</div>
-        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Pflichtvertrag zwischen Ihrem Unternehmen und jedem KI-Anbieter der Daten verarbeitet. Ohne AVV: Rechtsversto&szlig;. Die meisten Anbieter haben ihn &mdash; aber unterschrieben ist er oft nicht.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Alle Informationen, die eine Person identifizierbar machen: Name, E-Mail, IP-Adresse, Kundennummer.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Verzeichnis der Verarbeitungst&auml;tigkeiten (VVT)</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Pflichtdokument nach Art. 30 DSGVO: alle Prozesse bei denen Daten verarbeitet werden &mdash; inklusive jedes KI-Tools, das Kundendaten ber&uuml;hrt.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Pflichtdokument nach Art. 30 DSGVO. Listet alle Datenverarbeitungen im Unternehmen &mdash; inklusive KI-Tools.</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Auftragsverarbeitung (AVV)</div>
+        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Vertrag zwischen Unternehmen und KI-Anbieter, der regelt wie Daten verarbeitet werden d&uuml;rfen.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Datensparsamkeit</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Nur die Daten erheben die wirklich n&ouml;tig sind &mdash; auch im KI-Kontext. Wer ChatGPT mit Kundendaten f&uuml;ttert, ohne Grundlage, riskiert Bu&szlig;gelder.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">DSGVO-Grundsatz: nur so viele Daten erheben wie f&uuml;r den Zweck n&ouml;tig &mdash; auch beim KI-Einsatz.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">EU-Hosting</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI-Tools mit Servern in der EU sind datenschutzrechtlich sicherer. Bei sensiblen Daten: immer EU-Hosting w&auml;hlen. Sensibilis pr&uuml;ft das f&uuml;r Sie.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Speicherung und Verarbeitung von Daten auf Servern innerhalb der EU &mdash; datenschutzrechtlich bevorzugt.</p>
       </div>
     </div>
-    <div style="background:linear-gradient(135deg,rgba(184,146,74,.08) 0%,rgba(184,146,74,.03) 100%);border-left:3px solid var(--g);border-radius:4px;padding:18px 24px;margin-bottom:56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <p style="font-size:14px;color:var(--txt);margin:0;"><strong>Unsicher ob das bei Ihnen passt?</strong> Diese Fragen kl&auml;ren wir im kostenlosen Erstgespr&auml;ch &mdash; konkret, ohne Jurastudium.</p>
-      <button class="btn btn-red" onclick="nav('kontakt')" style="font-size:13px;padding:10px 20px;white-space:nowrap;">Erstgespr&auml;ch anfragen &rarr;</button>
-    </div>
 
-    <!-- Kategorie 4: KI im Betrieb -->
+    <!-- Kategorie 4 -->
     <div class="sec-hd">
-      <span class="eyebrow">KI im Betrieb</span>
-      <h2>Von der Idee zur echten Umsetzung.</h2>
+      <span class="eyebrow">KI-Einf&uuml;hrung &amp; Strategie</span>
+      <h2>Von der Idee zur Umsetzung.</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:32px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:56px;">
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Strategie</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Wer KI ohne Plan einf&uuml;hrt, kauft Tools die niemand nutzt. Eine KI-Strategie legt fest wo KI wirklich hilft &mdash; und wo nicht. Genau das erarbeiten wir in der Beratung.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Geplanter Rahmen, der festlegt wie, wo und mit welchen Zielen KI im Unternehmen eingesetzt wird.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Potenzialanalyse</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Systematischer Blick in Ihre Abl&auml;ufe: Wo verlieren Sie Zeit? Wo wiederholen sich Aufgaben? Genau dort setzt KI sinnvoll an.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Systematische Pr&uuml;fung, welche Prozesse im Betrieb durch KI sinnvoll unterst&uuml;tzt werden k&ouml;nnen.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Readiness</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Ist Ihr Betrieb bereit f&uuml;r KI? Technik, Team und Prozesse m&uuml;ssen passen. Wer zu fr&uuml;h startet, scheitert nicht an der KI &mdash; sondern an der Organisation.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Bereitschaft eines Unternehmens, KI erfolgreich einzuf&uuml;hren &mdash; technisch, organisatorisch und kulturell.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Prozessdigitalisierung</div>
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Change Management</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Betriebliche Abl&auml;ufe digital und teilautomatisiert gestalten &mdash; mit KI als Motor. Von der E-Mail-Vorlage bis zur automatischen Auswertung.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Strukturierte Begleitung von Ver&auml;nderungsprozessen &mdash; bei KI-Einf&uuml;hrung besonders wichtig f&uuml;r die Akzeptanz im Team.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Team-Einf&uuml;hrung</div>
+        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Mensch-KI-Zusammenarbeit</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">KI scheitert selten an der Technik &mdash; fast immer am Team. Wer die Mitarbeitenden von Anfang an mitnimmt, spart sich sp&auml;ter jede Menge Frust. Das ist Teil jeder Sensibilis-Beratung.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Arbeitsmodell, bei dem KI Aufgaben &uuml;bernimmt und Menschen sich auf Entscheidung und Kontrolle konzentrieren.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--c);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Pilotprojekt</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Klein anfangen, lernen, dann skalieren. Ein Pilotprojekt zeigt ob KI in Ihrem Betrieb wirklich funktioniert &mdash; ohne gro&szlig;es Risiko.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Erster begrenzter KI-Einsatz im Unternehmen &mdash; um Erfahrungen zu sammeln bevor gr&ouml;&szlig;er skaliert wird.</p>
       </div>
-    </div>
-    <div style="background:linear-gradient(135deg,rgba(140,26,42,.06) 0%,rgba(13,28,63,.04) 100%);border-left:3px solid var(--c);border-radius:4px;padding:18px 24px;margin-bottom:56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <p style="font-size:14px;color:var(--txt);margin:0;"><strong>Das ist genau unser Beratungsweg.</strong> Schritt f&uuml;r Schritt, pers&ouml;nlich, ohne Agentur-Overhead.</p>
-      <button class="btn btn-red" onclick="nav('beratung')" style="font-size:13px;padding:10px 20px;white-space:nowrap;">Zur Beratung &rarr;</button>
     </div>
 
-    <!-- Kategorie 5: Content & Sichtbarkeit -->
+    <!-- Kategorie 5 -->
     <div class="sec-hd">
-      <span class="eyebrow">Content &amp; Sichtbarkeit</span>
-      <h2>Damit Sie gefunden werden &mdash; auch von KI.</h2>
+      <span class="eyebrow">Content &amp; SEO mit KI</span>
+      <h2>Sichtbarkeit im KI-Zeitalter.</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:32px;">
-      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">SEO</div>
-        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Search Engine Optimization &mdash; damit Google Ihre Website findet und weit oben zeigt. Der Unterbau f&uuml;r alle weiteren Ma&szlig;nahmen.</p>
-      </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:56px;">
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">GEO &mdash; Generative Engine Optimization</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Der n&auml;chste Schritt: damit KI-Systeme wie ChatGPT, Perplexity oder Google AI Sie empfehlen. Wer jetzt optimiert, besetzt die Pl&auml;tze bevor der Wettbewerb aufwacht.</p>
-      </div>
-      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Content-Planung</div>
-        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Regelm&auml;&szlig;iger Content ist der wichtigste Faktor f&uuml;r Sichtbarkeit &mdash; online wie bei KI. Wer unregelm&auml;&szlig;ig postet, verschwindet. Unser Content Planer l&ouml;st das.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Optimierung von Inhalten f&uuml;r KI-Suchsysteme wie ChatGPT, Perplexity oder Google AI Overview &mdash; Erg&auml;nzung zum klassischen SEO.</p>
       </div>
       <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
         <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-generierter Content</div>
         <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Von KI erstellte Texte, Bilder oder Videos m&uuml;ssen nach EU AI Act gekennzeichnet werden. Wer das ignoriert, riskiert Bu&szlig;gelder &mdash; und Vertrauensverlust.</p>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Texte, Bilder oder Videos die von einer KI erstellt wurden &mdash; m&uuml;ssen nach EU AI Act entsprechend gekennzeichnet werden.</p>
       </div>
-      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">E-E-A-T</div>
-        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Experience, Expertise, Authoritativeness, Trustworthiness. Das Qualit&auml;tsmodell von Google &mdash; und das Bewertungsmodell jeder KI. Wer das erf&uuml;llt, wird zitiert.</p>
-      </div>
-      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">KI-Sichtbarkeit</div>
-        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Ob ein KI-System Ihr Unternehmen empfiehlt h&auml;ngt davon ab was online &uuml;ber Sie steht. Kleine Betriebe haben hier einen &uuml;berraschenden Vorteil: Spezialisierung schl&auml;gt Gr&ouml;&szlig;e.</p>
-      </div>
-      <div style="background:#fff;border:1px solid var(--bdr);border-top:3px solid var(--g);border-radius:2px;padding:20px 22px;">
-        <div style="font-family:Georgia,serif;font-size:17px;color:var(--n);margin-bottom:8px;">Redaktionsplan</div>
-        <div style="width:32px;height:2px;background:var(--g);margin-bottom:12px;"></div>
-        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Strukturierter Plan der festlegt wann welcher Inhalt wo ver&ouml;ffentlicht wird &mdash; Beitr&auml;ge, Themen, Kan&auml;le, Termine. Wer ohne Redaktionsplan arbeitet, postet zuf&auml;llig. Der Sensibilis Content Planer erstellt ihn automatisch.</p>
-      </div>
-    </div>
-    <div style="background:linear-gradient(135deg,rgba(184,146,74,.08) 0%,rgba(184,146,74,.03) 100%);border-left:3px solid var(--g);border-radius:4px;padding:18px 24px;margin-bottom:56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <p style="font-size:14px;color:var(--txt);margin:0;"><strong>Sichtbarkeit braucht regelm&auml;&szlig;igen Content.</strong> Unser Content Planer erstellt Ihren Redaktionsplan automatisch &mdash; mit KI-Unterst&uuml;tzung.</p>
-      <button class="btn" onclick="nav('contentplaner')" style="font-size:13px;padding:10px 20px;white-space:nowrap;background:var(--n);color:var(--iv);">Zum Content Planer &rarr;</button>
     </div>
 
-    <div style="text-align:center;">
+    <div style="margin-top:16px;text-align:center;">
       <button class="btn btn-red" onclick="nav('kontakt')">Kostenlose Erstberatung anfragen &rarr;</button>
     </div>
     <div class="page-nav-links"><a href="#" onclick="nav('faq')">FAQ</a><a href="#" onclick="nav('tools')">Unsere Tools</a><a href="#" onclick="nav('kontakt')">Beratung anfragen</a></div>
@@ -3702,18 +3618,11 @@ rd();step(1);
 </div>
 <script>
 (function(){
-  var aktiveMonat=[7];
+  var aktiveMonat=[7]; /* Monatszahlen: 7=Juli, 8=August usw. */
   var stempel=document.getElementById('juli-stempel');
-  if(stempel&&aktiveMonat.indexOf(new Date().getMonth()+1)!==-1){stempel.style.display='flex';}
-
-  /* Social Icons in alle Footer injizieren */
-  var svgFB='<a href="#" aria-label="Facebook" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:#1877F2;transition:opacity .2s;" onmouseenter="this.style.opacity=\'.8\'" onmouseleave="this.style.opacity=\'1\'"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></a>';
-  var svgIG='<a href="#" aria-label="Instagram" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);transition:opacity .2s;" onmouseenter="this.style.opacity=\'.8\'" onmouseleave="this.style.opacity=\'1\'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>';
-  var socialBlock='<div style="display:flex;gap:8px;align-items:center;">'+svgFB+svgIG+'</div>';
-
-  document.querySelectorAll('.footer-mini-inner').forEach(function(el){
-    el.insertAdjacentHTML('beforeend', socialBlock);
-  });
+  if(stempel&&aktiveMonat.indexOf(new Date().getMonth()+1)!==-1){
+    stempel.style.display='flex';
+  }
 })();
 </script>
 
@@ -4023,36 +3932,19 @@ function sendChat(){
 <!-- ══ SENSIBILIS ANALYTICS TRACKING ════════════════════════ -->
 <script>
 (function(){
-  var API='https://sensibilis-api.onrender.com/track'; /* Phase 2: Backend-URL */
-
+  var API='https://sensibilis-api.onrender.com/track';
   function send(data){
     try{ navigator.sendBeacon(API, JSON.stringify(data)); }catch(e){}
   }
-
   function pageview(){
-    send({
-      type:'pageview',
-      page:window.location.hash||'#home',
-      referrer:document.referrer,
-      ts:Date.now(),
-      lang:navigator.language,
-      w:window.innerWidth
-    });
+    send({type:'pageview',page:window.location.hash||'#home',referrer:document.referrer,ts:Date.now(),lang:navigator.language,w:window.innerWidth});
   }
-
   pageview();
   window.addEventListener('hashchange', pageview);
-
-  /* Alle .btn-Klicks automatisch erfassen */
   document.addEventListener('click',function(e){
     var btn=e.target.closest('.btn,[data-track]');
     if(!btn)return;
-    send({
-      type:'click',
-      label:(btn.dataset.track||btn.textContent.trim().replace(/\s+/g,' ').slice(0,50)),
-      page:window.location.hash||'#home',
-      ts:Date.now()
-    });
+    send({type:'click',label:(btn.dataset.track||btn.textContent.trim().replace(/\s+/g,' ').slice(0,50)),page:window.location.hash||'#home',ts:Date.now()});
   });
 })();
 </script>

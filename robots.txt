@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /
+
+Sitemap: https://anme15.github.io/Sensibilis-Ki/sitemap.xml
