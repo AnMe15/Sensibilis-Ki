@@ -1,0 +1,29 @@
+# Sensibilis
+
+> Sensibilis ist eine KI-Beratung für kleine Betriebe bis 50 Mitarbeiter in Niedersachsen. Inhaberin: Annett Mende, zertifizierter KI-Manager (FBS Future Education). Beratung auf Deutsch, praxisnah, ohne IT-Abteilung. DSGVO- und EU AI Act-konform.
+
+## Leistungen
+
+- [KI-Einführung](https://anme15.github.io/Sensibilis-Ki/#leistungen): Einführung von KI-Tools im Betriebsalltag — Schritt für Schritt, ohne technisches Vorwissen
+- [Content Planer](https://anme15.github.io/Sensibilis-Ki/#leistungen): KI-gestützte Content-Planung für Social Media und Website
+- [Website-Check](https://anme15.github.io/Sensibilis-Ki/#leistungen): Analyse der eigenen Website auf KI-Tauglichkeit und Sichtbarkeit
+- [Dokumentenmanagement](https://anme15.github.io/Sensibilis-Ki/#leistungen): Strukturierung und Automatisierung von Dokumentenprozessen
+- [Compliance-Check](https://anme15.github.io/Sensibilis-Ki/#leistungen): Prüfung auf DSGVO- und EU AI Act-Konformität
+
+## Wissensbereich
+
+- [Blog: Was der EU AI Act für kleine Unternehmen bedeutet](https://anme15.github.io/Sensibilis-Ki/#blog)
+- [Blog: KI im Alltag — diese 5 Tools sparen wirklich Zeit](https://anme15.github.io/Sensibilis-Ki/#blog)
+- [Blog: ChatGPT & DSGVO — was Unternehmen wissen müssen](https://anme15.github.io/Sensibilis-Ki/#blog)
+- [Glossar: KI-Begriffe klar erklärt](https://anme15.github.io/Sensibilis-Ki/#glossar)
+- [FAQ: Häufige Fragen zur KI-Beratung](https://anme15.github.io/Sensibilis-Ki/#faq)
+
+## Zielgruppe
+
+Kleine und mittlere Betriebe in Niedersachsen (bis 50 Mitarbeiter): Handwerk, Gastronomie, Dienstleistung, Gesundheit, Fitness, Hotel. Keine IT-Kenntnisse erforderlich.
+
+## Kontakt
+
+- Website: https://anme15.github.io/Sensibilis-Ki/
+- Kontaktformular: https://anme15.github.io/Sensibilis-Ki/#kontakt
+- Standort: Wesendorf, Niedersachsen, Deutschland
