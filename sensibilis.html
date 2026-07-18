@@ -2494,7 +2494,7 @@ rd();step(1);
     </div>
   </div>
   <div class="content-block">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;margin-top:48px;margin-bottom:64px;">
+    <div id="blog-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;margin-top:48px;margin-bottom:32px;">
 
       <!-- Artikel 1 -->
       <article onclick="nav('blog-1')" style="background:#fff;border:1px solid var(--bdr);border-radius:8px;overflow:hidden;cursor:pointer;transition:box-shadow .25s,transform .25s;display:flex;flex-direction:column;" onmouseover="this.style.boxShadow='0 12px 48px rgba(22,10,13,.14)';this.style.transform='translateY(-5px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
@@ -2604,6 +2604,7 @@ rd();step(1);
       </article>
 
     </div>
+    <div id="blog-pager"></div>
     <div class="page-nav-links"><a href="#" onclick="nav('zukunft')">KI &amp; Zukunft</a><a href="#" onclick="nav('tools')">Unsere Tools</a><a href="#" onclick="nav('kontakt')">Kontakt aufnehmen</a></div>
   </div>
   <footer class="footer-mini">
@@ -3984,12 +3985,34 @@ var SEO_META={
   'home':{t:'Sensibilis — KI-Services für Unternehmen | Annett Mende',d:'KI-Beratung, KI Pass und Content Planer für kleine und mittlere Unternehmen. DSGVO-konform, praxisnah, ohne Fachjargon.'},
   'checkliste':{t:'EU AI Act Selbstcheck für Ihren Betrieb | Sensibilis',d:'Wo steht Ihr Betrieb beim EU AI Act? 9 Fragen, 2 Minuten, sofortiges Ergebnis — ohne Anmeldung. Jetzt prüfen.'}
 };
+var _blogPage=1;
+function blogGo(n){
+  _blogPage=n;
+  var arts=document.querySelectorAll('#blog-grid > article, #blog-grid > [onclick]');
+  var total=arts.length;
+  var perPage=6;
+  var pages=Math.ceil(total/perPage);
+  arts.forEach(function(a,i){
+    a.style.display=(i>=(n-1)*perPage && i<n*perPage)?'':'none';
+  });
+  var pager=document.getElementById('blog-pager');
+  if(!pager)return;
+  var btnStyle='background:transparent;border:1px solid rgba(13,28,63,.25);color:var(--n);padding:10px 20px;font-size:14px;border-radius:4px;cursor:pointer;font-family:inherit;transition:all .2s;';
+  var html='<div style="display:flex;align-items:center;justify-content:center;gap:20px;margin:8px 0 48px;">';
+  if(n>1)html+='<button onclick="blogGo('+(n-1)+')" style="'+btnStyle+'">&larr; Vorherige</button>';
+  html+='<span style="font-size:14px;color:var(--txt2);">Seite '+n+' von '+pages+'</span>';
+  if(n<pages)html+='<button onclick="blogGo('+(n+1)+')" style="'+btnStyle+'">N&auml;chste &rarr;</button>';
+  html+='</div>';
+  pager.innerHTML=html;
+  window.scrollTo({top:0,behavior:'instant'});
+}
 function nav(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   var pg=document.getElementById('page-'+id);
   if(pg)pg.classList.add('active');
   if(id==='checkliste')chkReset();
   if(id==='kipass'){var kd=document.getElementById('kp-demo');if(kd)kd.style.display='none';}
+  if(id==='blog')blogGo(1);
   document.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
     a.classList.toggle('active', a.dataset.page===id);
   });
