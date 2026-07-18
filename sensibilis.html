@@ -3970,7 +3970,7 @@ function sendChat(){
 <!-- ══ SENSIBILIS ANALYTICS TRACKING ════════════════════════ -->
 <script>
 (function(){
-  var API='https://mein-agent.onrender.com/sensibilis/track'; /* Live */
+  var API='https://sensibilis-api.onrender.com/track'; /* Live */
   function send(data){
     try{ navigator.sendBeacon(API, new Blob([JSON.stringify(data)],{type:'application/json'})); }catch(e){}
   }
