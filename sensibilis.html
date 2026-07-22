@@ -4248,7 +4248,7 @@ const kb=[
   /* Risikoklassen */
   [/risikoklasse|klasse|einstufung|hochrisiko/i,'Der EU AI Act unterscheidet vier Stufen: minimales Risiko, begrenztes Risiko, Hochrisiko und unannehmbares Risiko. Die meisten kleinen Betriebe landen mit ChatGPT & Co. bei Klasse 2 oder 3 — also kein Hochrisiko, aber Dokumentationspflicht. Was genau für Ihren Betrieb gilt, zeigt der Schnellcheck in zwei Minuten.'],
   /* Content Planer */
-  [/content.planer|redaktionsplan|social media.*ki|ki.*social|beitrag.*ki/i,'Den Content Planer entwickle ich gerade als nächstes Tool. Er soll Redaktionsplanung, Texterstellung und Bildvorschläge für Social Media zusammenführen — abgestimmt auf Ihre Branche und Ihren Kanal. Wenn Sie informiert bleiben möchten, wenn er verfügbar ist: schreiben Sie mir kurz.'],
+  [/content.planer|redaktionsplan|social media.*ki|ki.*social|beitrag.*ki/i,'Der Content Planer ist bereits verfügbar. Er erstellt auf Knopfdruck einen vollständigen Redaktionsplan: Bereich wählen, Thema eingeben, fertigen Post erhalten — mit Saisonkalender, Textentwürfen und Bildvorschlägen. Nutzbar für Hotel, Restaurant, Fitness, Wellness, Sportzentrum und jede andere Branche. Einmalpreis 490,- € inklusive 12 Monate Hosting. Schauen Sie gerne auf der Content-Planer-Seite rein.'],
   /* Website-Check */
   [/website.check|webcheck|website.*prüf|seite.*analyse/i,'Der Website-Check analysiert Ihre Website automatisch: Wie DSGVO-konform ist sie? Wo gibt es KI-Optimierungspotenzial? Was läuft technisch nicht rund? Das Tool ist gerade in Entwicklung. Ich melde mich, sobald es verfügbar ist — wenn Sie möchten, tragen Sie sich einfach über das Kontaktformular ein.'],
   /* KI im Handwerk / Branche */
@@ -4268,19 +4268,21 @@ const kb=[
   /* Datenschutz KI-Tools */
   [/sicher|vertrauen|daten.*weg|training.*daten|ki.*lernt|gespeichert/i,'Eine berechtigte Sorge. Die meisten KI-Anbieter trainieren ihre Modelle mit den eingegebenen Daten — es sei denn, Sie deaktivieren das aktiv. Bei ChatGPT heißt die Einstellung "Modelltraining" unter Datenschutz. Der KI Pass weist Sie genau auf solche Punkte hin und dokumentiert, was Sie eingestellt haben.'],
   /* Zukunft / Nächste Tools */
-  [/zukunft|geplant|demnächst|was kommt|nächste/i,'Aktuell gibt es den KI Pass und den kostenlosen Schnellcheck. In Entwicklung sind der Content Planer für Social Media und der Website-Check. Wenn Sie auf dem Laufenden bleiben möchten, tragen Sie sich einfach über das Kontaktformular ein — ich schreibe Ihnen, wenn etwas Neues verfügbar ist.'],
+  [/zukunft|geplant|demnächst|was kommt|nächste/i,'Aktuell gibt es den KI Pass, den kostenlosen Schnellcheck und den Content Planer. In Entwicklung sind noch der Website-Check und das Dokumentenmanagementsystem DMS. Wenn Sie informiert bleiben möchten, tragen Sie sich einfach über das Kontaktformular ein.'],
   /* DMS — Dokumentenmanagementsystem */
   [/\bdms\b|dokumenten.management|dokumentenmanagement|dokument.*finden|ordner.*chaos|datei.*suche|ablage.*ki|ki.*ablage/i,'Das Sensibilis DMS ist ein KI-gestütztes Dokumentenmanagementsystem für kleine Betriebe — ohne Serverinstallation, ohne Schulungsaufwand. Dokumente hochladen, automatisch verschlagworten, per KI-Volltextsuche finden. DSGVO-konform, Serverstandort Deutschland. Das Tool ist noch in Entwicklung — wenn Sie informiert bleiben möchten, schreiben Sie mir kurz über das Kontaktformular.'],
   /* Beratung & Begleitung */
-  [/begleitung|begleit|einzel.*beratung|stunden.*beratung|was bieten|leistung|angebot.*sensibilis/i,'Sensibilis bietet drei Leistungen: den KI Pass zur EU AI Act Dokumentation, persönliche Beratung & Begleitung für die KI-Einführung, und Tools in Entwicklung (Content Planer, DMS, Website-Check). Im kostenlosen Erstgespräch schauen wir, was konkret bei Ihnen ansteht — ohne Druck, ohne Verkaufsgespräch. Einfach melden.'],
+  [/begleitung|begleit|einzel.*beratung|stunden.*beratung|was bieten|leistung|angebot.*sensibilis/i,'Sensibilis bietet aktuell: den KI Pass zur EU AI Act Dokumentation (39,- € im Juli, danach 59,- €), den Content Planer für KI-gestützte Social-Media-Texte (490,- € einmalig inkl. 12 Monate Hosting) und persönliche Beratung & Begleitung (Erstgespräch kostenlos). In Entwicklung: DMS und Website-Check. Einfach melden — ohne Verkaufsdruck.'],
   /* Allgemein KI */
   [/ki|künstliche intelligenz|artificial intelligence|ai\b/i,'KI ist längst kein Zukunftsthema mehr — auch kleine Betriebe ohne IT-Abteilung nutzen sie täglich. Die Frage ist nicht ob, sondern wie: sicher, datenschutzkonform und so, dass es wirklich Zeit spart. Genau dabei helfe ich.'],
+  /* Off-Topic */
+  [/\bwetter\b|wetterbericht|temperatur.*heute|regen.*morgen|fußball|bundesliga|sport.*ergebnis|rezept\b|kochen|backen|\baktien\b|börse|bitcoin|krypto|netflix|musik.*chart|nachrichten.*heute|tagesschau/i,'Das liegt außerhalb meines Fachgebiets — ich bin auf KI-Beratung für kleine Betriebe spezialisiert. Wenn Sie Fragen zu KI, EU AI Act, DSGVO oder meinen Tools haben, helfe ich gerne weiter.'],
 ];
 document.addEventListener('DOMContentLoaded',function(){
   var ci=document.getElementById('chat-in');
   if(ci)ci.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendChat();}});
 });
-const kbTopics=['KI Pass','Schnellcheck','KI Pass Preis','EU AI Act','EU AI Act Fristen','DSGVO','ChatGPT','Copilot','Risikoklassen','Content Planer','Website-Check','Handwerk','Hotel & Gastronomie','Wer ist Sensibilis','Region','Wie anfangen','Aufwand & Dauer','Beratung & Kontakt','Datenschutz KI-Tools','Zukunft & Tools','DMS','Begleitung & Leistungen','KI allgemein'];
+const kbTopics=['KI Pass','Schnellcheck','KI Pass Preis','EU AI Act','EU AI Act Fristen','DSGVO','ChatGPT','Copilot','Risikoklassen','Content Planer','Website-Check','Handwerk','Hotel & Gastronomie','Wer ist Sensibilis','Region','Wie anfangen','Aufwand & Dauer','Beratung & Kontakt','Datenschutz KI-Tools','Zukunft & Tools','DMS','Begleitung & Leistungen','KI allgemein','Off-Topic'];
 function sendChat(){
   const inp=document.getElementById('chat-in');
   const q=inp.value.trim();if(!q)return;
