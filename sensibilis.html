@@ -553,11 +553,23 @@ footer{background:var(--ink);padding:56px 48px 32px;}
   display:none;flex-direction:column;overflow:hidden;
   border:1px solid rgba(0,0,0,.08);
 }
+@media(max-width:440px){
+  #chat-widget{bottom:16px;left:12px;right:12px;}
+  #chat-window{width:calc(100vw - 24px);left:0;}
+}
 .chat-header{background:var(--n);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .chat-header span{font-size:14px;color:var(--iv);font-weight:600;}
 .chat-header button{background:none;border:none;color:rgba(243,237,227,.6);font-size:18px;cursor:pointer;padding:0;line-height:1;}
 .chat-header button:hover{color:var(--iv);}
 .chat-msgs{padding:14px;display:flex;flex-direction:column;gap:8px;height:300px;overflow-y:auto;background:#fff;}
+#chat-chips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px 10px;background:#fff;border-top:1px solid rgba(0,0,0,.06);}
+.chat-chip{background:var(--iv-d);border:1px solid rgba(140,26,42,.18);color:var(--c);padding:5px 13px;border-radius:20px;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s,border-color .15s;}
+.chat-chip:hover{background:rgba(140,26,42,.1);border-color:rgba(140,26,42,.35);}
+.chat-typing{display:flex;gap:5px;padding:10px 14px;align-self:flex-start;background:var(--iv-d);border-radius:4px;}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--c);opacity:.35;animation:snbtyp .9s infinite;}
+.chat-typing span:nth-child(2){animation-delay:.18s;}
+.chat-typing span:nth-child(3){animation-delay:.36s;}
+@keyframes snbtyp{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:.9;transform:translateY(-4px)}}
 .msg{font-size:13px;line-height:1.5;padding:9px 12px;border-radius:4px;max-width:85%;}
 .msg-bot{background:var(--iv-d);color:var(--txt);align-self:flex-start;}
 .msg-user{background:var(--c);color:var(--iv);align-self:flex-end;}
@@ -3962,11 +3974,17 @@ rd();step(1);
 <div id="chat-widget">
   <div id="chat-window" style="display:none;">
     <div class="chat-header">
-      <span><em class="brand-s">S</em>ensibilis Assistent <span style="font-size:10px;font-weight:400;opacity:.6;letter-spacing:.04em;">· KI</span></span>
+      <span>Sensi <span style="font-size:10px;font-weight:400;opacity:.6;letter-spacing:.04em;">· KI-Assistentin</span></span>
       <button onclick="document.getElementById('chat-window').style.display='none'">&#x2715;</button>
     </div>
     <div id="chat-msgs" class="chat-msgs">
-      <div class="msg msg-bot">Hallo! Ich bin der KI-Assistent von Sensibilis. Was m&ouml;chten Sie wissen?</div>
+      <div class="msg msg-bot">Hallo! Ich bin Sensi, die KI-Assistentin von Sensibilis. Was kann ich f&uuml;r Sie tun?</div>
+    </div>
+    <div id="chat-chips">
+      <button class="chat-chip" onclick="chipClick('Was ist der KI Pass?')">KI Pass</button>
+      <button class="chat-chip" onclick="chipClick('EU AI Act')">EU AI Act</button>
+      <button class="chat-chip" onclick="chipClick('Was kostet was?')">Preise</button>
+      <button class="chat-chip" onclick="chipClick('Ich möchte eine Beratung')">Beratung</button>
     </div>
     <div class="chat-input-row">
       <input id="chat-in" type="text" placeholder="Ihre Frage..." onkeydown="if(event.key==='Enter')sendChat()">
@@ -4230,71 +4248,84 @@ function kpDemoStart(){
 /* ── CHATBOT ───────────────────────────────────────────── */
 const kb=[
   /* KI Pass — Was ist das */
-  [/was ist.*ki pass|ki pass.*was|erkl.r.*ki pass/i,'Der KI Pass ist ein digitales Dokumentations-Tool, das ich für Betriebe entwickelt habe, die KI einsetzen — ob ChatGPT, Copilot oder andere Tools. Sie erfassen Ihre KI-Nutzung strukturiert, erhalten eine Risikoklasse nach EU AI Act und bekommen exportfertige Dokumente: Verarbeitungsverzeichnis, Einstufungsdokument und einen konkreten Fahrplan. Alles läuft im Browser, nichts wird gespeichert.'],
+  [/was ist.*ki pass|ki pass.*was|erkl.r.*ki pass/i,'Den KI Pass habe ich speziell für Betriebe wie Ihren entwickelt — er erfasst Ihre KI-Nutzung strukturiert, ordnet sie nach EU AI Act ein und erstellt exportfertige Dokumente. Alles läuft im Browser, nichts wird gespeichert. Soll ich Ihnen zeigen, was drin steckt?'],
   /* KI Pass — Schnellcheck */
-  [/schnellcheck|selbstcheck|test.*ki|ki.*test|checkliste/i,'Der Schnellcheck auf der KI-Pass-Seite ist kostenlos — drei Fragen, zwei Minuten, direkte Einordnung. Er zeigt Ihnen, ob Sie eher Standarddokumentation oder Hochrisiko-Prüfung brauchen. Keine Anmeldung, kein Haken. Einfach ausprobieren.'],
+  [/schnellcheck|selbstcheck|test.*ki|ki.*test|checkliste/i,'Drei Fragen, zwei Minuten — der kostenlose Schnellcheck zeigt Ihnen direkt, wo Sie stehen. Keine Anmeldung, kein Haken. Haben Sie ihn schon ausprobiert?'],
   /* KI Pass — Preis */
-  [/preis|kosten|was kostet|wie teuer|39|juli.*aktion|aktion/i,'Im Juli gibt es den KI Pass für 39 €. Das ist die vollständige Version — kein Abo, keine versteckten Kosten. Sie zahlen einmal und haben dauerhaft Zugriff auf Ihre Dokumente. Nach Juli wird der Preis angepasst. Wenn Sie also jetzt gerade hier sind: guter Zeitpunkt.'],
+  [/preis|kosten|was kostet|wie teuer|39|juli.*aktion|aktion/i,'Im Juli gibt es den KI Pass für 39 € — einmalig, kein Abo, dauerhafter Zugriff. Nach Juli wird er 59 €. Wenn Sie also gerade hier sind: guter Zeitpunkt. Möchten Sie direkt starten?'],
   /* EU AI Act — Was ist das */
-  [/eu ai act|ai act|ki.gesetz|ki.regulierung/i,'Der EU AI Act ist seit 2024 in Kraft — die weltweit erste verbindliche KI-Regulierung. Er teilt KI-Systeme in Risikoklassen ein und legt fest, was Unternehmen dokumentieren und nachweisen müssen. 2026 greifen die strengen Fristen. Das klingt erstmal viel — ist es aber nicht, wenn man weiß, wo man steht. Genau dafür gibt es den KI Pass.'],
+  [/eu ai act|ai act|ki.gesetz|ki.regulierung/i,'Der EU AI Act ist seit 2024 in Kraft und betrifft jeden, der KI einsetzt — auch kleine Betriebe. Er teilt KI in Risikoklassen ein und regelt, was dokumentiert werden muss. Klingt viel, ist aber machbar wenn man weiß wo man steht. Möchten Sie mehr über die konkreten Pflichten wissen?'],
   /* EU AI Act — Fristen */
-  [/frist|deadline|wann|bis wann|pflicht/i,'Die wichtigsten Fristen: Seit Februar 2025 gelten die Verbote für unannehmbares Risiko. Ab August 2026 müssen Hochrisiko-Systeme vollständig dokumentiert sein. Für die meisten kleinen Betriebe, die ChatGPT oder ähnliche Tools nutzen, geht es vor allem um die korrekte Einstufung und einen AVV. Das ist machbar — und ich helfe dabei.'],
+  [/frist|deadline|wann|bis wann|pflicht/i,'Die wichtigste Frist: Ab August 2026 müssen Hochrisiko-Systeme vollständig dokumentiert sein. Für die meisten kleinen Betriebe geht es vor allem um korrekte Einstufung und einen AVV — das ist machbar. Soll ich erklären, was das konkret für Ihren Betrieb bedeutet?'],
   /* DSGVO */
-  [/dsgvo|datenschutz|personenbezogen|avv|auftragsverarbeitung/i,'DSGVO und KI — das ist ein heikles Thema, aber kein unlösbares. Wer ChatGPT für Kundentexte nutzt und dabei Namen oder andere personenbezogene Daten eingibt, braucht zwingend einen Auftragsverarbeitungsvertrag (AVV) mit dem Anbieter. Außerdem sollte das Daten-Training deaktiviert sein. Der KI Pass prüft genau das — Schritt für Schritt.'],
+  [/dsgvo|datenschutz|personenbezogen|avv|auftragsverarbeitung/i,'DSGVO und KI ist lösbar — wenn man weiß was zu tun ist. Wer KI für Kundenkommunikation nutzt, braucht einen AVV mit dem Anbieter und sollte das Daten-Training deaktiviert haben. Der KI Pass führt Sie Schritt für Schritt durch genau diese Punkte. Haben Sie das bei Ihren Tools schon überprüft?'],
   /* ChatGPT */
-  [/chatgpt|gpt|openai/i,'ChatGPT ist das meistgenutzte KI-Tool in kleinen Betrieben — und eines der am häufigsten falsch eingesetzten. Das Problem: Viele nutzen die kostenlose Consumer-Version, die für berufliche Zwecke mit Kundendaten schlicht nicht geeignet ist. Für Unternehmen braucht es die Business-Version mit AVV. Ich zeige Ihnen, was genau einzustellen ist.'],
+  [/chatgpt|gpt|openai/i,'ChatGPT ist super — aber wird oft falsch eingesetzt. Für berufliche Nutzung mit Kundendaten brauchen Sie die Business-Version mit AVV, nicht die kostenlose Consumer-Version. Ich zeige Ihnen genau was einzustellen ist. Nutzen Sie ChatGPT gerade im Betrieb?'],
   /* Copilot */
-  [/copilot|microsoft|office.*ki|ki.*office/i,'Microsoft Copilot ist direkt in Office 365 integriert und für viele Betriebe der einfachste Einstieg in KI. Der große Vorteil: Microsoft hat einen AVV bereits standardmäßig eingebettet. Trotzdem empfehle ich, die Einstellungen zu prüfen und die KI-Nutzung im Betrieb zu dokumentieren — das gehört zur EU AI Act-Konformität.'],
+  [/copilot|microsoft|office.*ki|ki.*office/i,'Microsoft Copilot hat einen Vorteil: Der AVV ist bereits standardmäßig eingebettet. Trotzdem empfehle ich, die Einstellungen zu prüfen und die KI-Nutzung zu dokumentieren — das gehört zur EU AI Act-Konformität. Nutzen Sie Office 365?'],
   /* Risikoklassen */
-  [/risikoklasse|klasse|einstufung|hochrisiko/i,'Der EU AI Act unterscheidet vier Stufen: minimales Risiko, begrenztes Risiko, Hochrisiko und unannehmbares Risiko. Die meisten kleinen Betriebe landen mit ChatGPT & Co. bei Klasse 2 oder 3 — also kein Hochrisiko, aber Dokumentationspflicht. Was genau für Ihren Betrieb gilt, zeigt der Schnellcheck in zwei Minuten.'],
+  [/risikoklasse|klasse|einstufung|hochrisiko/i,'Der EU AI Act unterscheidet vier Stufen: minimales Risiko, begrenztes Risiko, Hochrisiko und unannehmbares Risiko. Die meisten kleinen Betriebe landen mit ChatGPT & Co. bei Klasse 1 oder 2 — Dokumentationspflicht, aber kein Hochrisiko. Was genau für Sie gilt, zeigt der Schnellcheck in zwei Minuten.'],
   /* Content Planer */
-  [/content.planer|redaktionsplan|social media.*ki|ki.*social|beitrag.*ki/i,'Der Content Planer ist bereits verfügbar. Er erstellt auf Knopfdruck einen vollständigen Redaktionsplan: Bereich wählen, Thema eingeben, fertigen Post erhalten — mit Saisonkalender, Textentwürfen und Bildvorschlägen. Nutzbar für Hotel, Restaurant, Fitness, Wellness, Sportzentrum und jede andere Branche. Einmalpreis 490,- € inklusive 12 Monate Hosting. Schauen Sie gerne auf der Content-Planer-Seite rein.'],
+  [/content.planer|redaktionsplan|social media.*ki|ki.*social|beitrag.*ki/i,'Den Content Planer gibt es bereits — er erstellt auf Knopfdruck Redaktionspläne und Social-Media-Texte. Bereich wählen, Thema eingeben, fertigen Post erhalten. Mit Saisonkalender und Bildvorschlägen. Einmalpreis 490,- € inkl. 12 Monate Hosting. Soll ich Sie zur Demo führen?'],
   /* Website-Check */
-  [/website.check|webcheck|website.*prüf|seite.*analyse/i,'Der Website-Check analysiert Ihre Website automatisch: Wie DSGVO-konform ist sie? Wo gibt es KI-Optimierungspotenzial? Was läuft technisch nicht rund? Das Tool ist gerade in Entwicklung. Ich melde mich, sobald es verfügbar ist — wenn Sie möchten, tragen Sie sich einfach über das Kontaktformular ein.'],
+  [/website.check|webcheck|website.*prüf|seite.*analyse/i,'Der Website-Check ist noch in Entwicklung — er soll Ihre Website automatisch auf DSGVO-Konformität und KI-Potenzial prüfen. Wenn Sie informiert werden möchten sobald er fertig ist, schreiben Sie mir kurz über das Kontaktformular.'],
   /* KI im Handwerk / Branche */
-  [/handwerk|werkstatt|tischler|schreiner|elektriker|sanitär|maler/i,'Im Handwerk steckt mehr KI-Potenzial als viele denken: Angebotserstellung, Kundenkommunikation, Dokumentation — alles lässt sich mit den richtigen Tools deutlich schneller erledigen. Ich habe selbst Erfahrung mit Betrieben ohne IT-Abteilung und weiß, was praxistauglich ist und was nicht.'],
+  [/handwerk|werkstatt|tischler|schreiner|elektriker|sanitär|maler/i,'Im Handwerk steckt mehr KI-Potenzial als viele denken: Angebote schneller schreiben, Kundenkommunikation automatisieren, Dokumentation vereinfachen. Ich kenne Betriebe ohne IT-Abteilung gut und weiß was wirklich funktioniert. In welchem Bereich möchten Sie anfangen?'],
   /* KI im Hotel / Gastronomie */
-  [/hotel|gastronomie|restaurant|rezeption|bewirtung/i,'Hotellerie und Gastronomie sind Bereiche, in denen ich selbst tief verwurzelt bin — ich arbeite seit Jahren im laVital in Wesendorf. KI hilft hier beim Gästemanagement, bei Bewertungsantworten, bei der Personalplanung und beim Marketing. Und ja, auch dabei gelten DSGVO und EU AI Act.'],
+  [/hotel|gastronomie|restaurant|rezeption|bewirtung/i,'Hotellerie und Gastronomie kenne ich aus eigener Erfahrung — ich arbeite selbst im laVital in Wesendorf. KI hilft hier beim Gästemanagement, bei Bewertungsantworten, Personalplanung und Marketing. Und ja, auch hier gelten DSGVO und EU AI Act. Was beschäftigt Sie am meisten?'],
   /* Annett / Sensibilis — Wer */
-  [/wer bist|wer sind|annett|sensibilis.*wer|über.*sensibilis/i,'Ich bin Annett Mende — ich leite Fitness, Marketing und HR im laVital in Wesendorf und bilde mich gerade zur KI-Managerin aus. Sensibilis ist mein eigenes Projekt: KI-Beratung für kleine Betriebe, die keine IT-Abteilung haben und trotzdem zukunftsfähig sein wollen. Ich kenne das aus eigener Erfahrung.'],
+  [/wer bist|wer sind|annett|sensibilis.*wer|über.*sensibilis/i,'Ich bin Sensi, der KI-Assistent von Annett Mende. Annett leitet Fitness, Marketing und HR im laVital in Wesendorf und ist zertifizierte KI-Managerin. Sensibilis ist ihr Projekt: KI-Beratung für kleine Betriebe ohne IT-Abteilung — praxisnah, aus eigener Erfahrung. Möchten Sie direkt mit Annett sprechen?'],
   /* Wo / Region */
-  [/wo|region|niedersachsen|uelzen|gifhorn|bad bodenteich|heide|celle|lüneburg/i,'Sensibilis ist in Bad Bodenteich ansässig — Alte Heerstraße, mitten in der Lüneburger Heide. Ich berate Betriebe in Uelzen, Gifhorn, Lüneburg, Celle und dem Heidekreis — persönlich vor Ort oder per Video. Die Region, in der man lebt, kennt man eben am besten.'],
+  [/wo|region|niedersachsen|uelzen|gifhorn|bad bodenteich|heide|celle|lüneburg/i,'Annett ist in Bad Bodenteich ansässig und berät Betriebe in Uelzen, Gifhorn, Lüneburg, Celle und dem Heidekreis — persönlich vor Ort oder per Video. Die Region kennt man eben am besten wenn man selbst dort lebt. Sind Sie in der Nähe?'],
   /* Wie anfangen */
-  [/wie.*anfang|wo.*anfang|erst.*schritt|einstieg|nicht.*wiss.*wo/i,'Am besten fangen Sie mit dem kostenlosen Schnellcheck an — drei Fragen, direkte Einordnung, kein Aufwand. Dann wissen Sie, wo Sie stehen. Wenn Sie danach konkrete Fragen haben, bin ich per E-Mail erreichbar. Kein Verkaufsdruck, versprochen.'],
+  [/wie.*anfang|wo.*anfang|erst.*schritt|einstieg|nicht.*wiss.*wo/i,'Mein Tipp: Starten Sie mit dem kostenlosen Schnellcheck — drei Fragen, direkte Einordnung, zwei Minuten. Dann wissen Sie genau wo Sie stehen. Soll ich Sie direkt hinführen?'],
   /* Aufwand / Dauer */
-  [/aufwand|dauer|wie lang|wie viel zeit|schnell/i,'Der Schnellcheck dauert zwei Minuten. Der vollständige KI Pass — je nach Anzahl Ihrer Tools — etwa 20 bis 40 Minuten. Sie füllen ihn einmal aus, erhalten exportfertige Dokumente und müssen sich erstmal keine Gedanken mehr machen. Wenn sich bei Ihnen etwas ändert, kann man ihn jederzeit aktualisieren.'],
+  [/aufwand|dauer|wie lang|wie viel zeit|schnell/i,'Schnellcheck: zwei Minuten. KI Pass vollständig: 20 bis 40 Minuten je nach Anzahl Ihrer Tools. Einmal erledigt, dauerhaft dokumentiert — und bei Änderungen jederzeit aktualisierbar. Klingt das machbar?'],
   /* Beratung / Kontakt */
-  [/beratung|gespräch|termin|kontakt|schreib|mail|telefon|anruf/i,'Sehr gerne. Das Erstgespräch ist ohne Berechnung — wir schauen gemeinsam, was bei Ihnen konkret ansteht und ob ich helfen kann. Schreiben Sie mir an amen1@t-online.de oder nutzen Sie das Kontaktformular. Ich antworte in der Regel innerhalb eines Werktages.'],
+  [/beratung|gespräch|termin|kontakt|schreib|mail|telefon|anruf/i,'Sehr gerne — das Erstgespräch ist kostenlos. Wir schauen gemeinsam was bei Ihnen ansteht und ob ich helfen kann. Schreiben Sie Annett an amen1@t-online.de oder nutzen Sie das Kontaktformular. Sie antwortet meist am gleichen Werktag.'],
   /* Datenschutz KI-Tools */
-  [/sicher|vertrauen|daten.*weg|training.*daten|ki.*lernt|gespeichert/i,'Eine berechtigte Sorge. Die meisten KI-Anbieter trainieren ihre Modelle mit den eingegebenen Daten — es sei denn, Sie deaktivieren das aktiv. Bei ChatGPT heißt die Einstellung "Modelltraining" unter Datenschutz. Der KI Pass weist Sie genau auf solche Punkte hin und dokumentiert, was Sie eingestellt haben.'],
+  [/sicher|vertrauen|daten.*weg|training.*daten|ki.*lernt|gespeichert/i,'Berechtigte Sorge. Die meisten KI-Anbieter trainieren mit Ihren Eingaben — es sei denn, Sie deaktivieren das aktiv. Bei ChatGPT heißt die Einstellung "Modelltraining" unter Datenschutz. Der KI Pass weist Sie genau auf solche Punkte hin. Haben Sie das bei Ihren Tools schon eingestellt?'],
   /* Zukunft / Nächste Tools */
-  [/zukunft|geplant|demnächst|was kommt|nächste/i,'Aktuell gibt es den KI Pass, den kostenlosen Schnellcheck und den Content Planer. In Entwicklung sind noch der Website-Check und das Dokumentenmanagementsystem DMS. Wenn Sie informiert bleiben möchten, tragen Sie sich einfach über das Kontaktformular ein.'],
+  [/zukunft|geplant|demnächst|was kommt|nächste/i,'Aktuell gibt es den KI Pass, den Schnellcheck und den Content Planer. In Entwicklung: Website-Check und DMS. Wenn Sie informiert bleiben möchten, tragen Sie sich über das Kontaktformular ein — Annett meldet sich persönlich. Was interessiert Sie am meisten?'],
   /* DMS — Dokumentenmanagementsystem */
-  [/\bdms\b|dokumenten.management|dokumentenmanagement|dokument.*finden|ordner.*chaos|datei.*suche|ablage.*ki|ki.*ablage/i,'Das Sensibilis DMS ist ein KI-gestütztes Dokumentenmanagementsystem für kleine Betriebe — ohne Serverinstallation, ohne Schulungsaufwand. Dokumente hochladen, automatisch verschlagworten, per KI-Volltextsuche finden. DSGVO-konform, Serverstandort Deutschland. Das Tool ist noch in Entwicklung — wenn Sie informiert bleiben möchten, schreiben Sie mir kurz über das Kontaktformular.'],
+  [/\bdms\b|dokumenten.management|dokumentenmanagement|dokument.*finden|ordner.*chaos|datei.*suche|ablage.*ki|ki.*ablage/i,'Das DMS ist noch in Entwicklung — ein KI-gestütztes System für Ihre Dokumente: hochladen, automatisch verschlagworten, per Suche finden. DSGVO-konform, Serverstandort Deutschland. Wenn Sie informiert werden möchten, schreiben Sie kurz über das Kontaktformular.'],
   /* Beratung & Begleitung */
-  [/begleitung|begleit|einzel.*beratung|stunden.*beratung|was bieten|leistung|angebot.*sensibilis/i,'Sensibilis bietet aktuell: den KI Pass zur EU AI Act Dokumentation (39,- € im Juli, danach 59,- €), den Content Planer für KI-gestützte Social-Media-Texte (490,- € einmalig inkl. 12 Monate Hosting) und persönliche Beratung & Begleitung (Erstgespräch kostenlos). In Entwicklung: DMS und Website-Check. Einfach melden — ohne Verkaufsdruck.'],
+  [/begleitung|begleit|einzel.*beratung|stunden.*beratung|was bieten|leistung|angebot.*sensibilis/i,'Sensibilis bietet: den KI Pass (39,- € im Juli, danach 59,- €), den Content Planer (490,- € einmalig inkl. 12 Monate Hosting) und persönliche Beratung — Erstgespräch kostenlos. In Entwicklung: DMS und Website-Check. Womit kann ich Ihnen konkret helfen?'],
   /* Allgemein KI */
-  [/ki|künstliche intelligenz|artificial intelligence|ai\b/i,'KI ist längst kein Zukunftsthema mehr — auch kleine Betriebe ohne IT-Abteilung nutzen sie täglich. Die Frage ist nicht ob, sondern wie: sicher, datenschutzkonform und so, dass es wirklich Zeit spart. Genau dabei helfe ich.'],
+  [/ki|künstliche intelligenz|artificial intelligence|ai\b/i,'KI ist kein Zukunftsthema mehr — sie ist schon da, auch in kleinen Betrieben. Die Frage ist nicht ob, sondern wie: sicher, datenschutzkonform und so, dass es wirklich Zeit spart. Genau dabei helfe ich. Wo setzen Sie KI bereits ein?'],
   /* Off-Topic */
-  [/\bwetter\b|wetterbericht|temperatur.*heute|regen.*morgen|fußball|bundesliga|sport.*ergebnis|rezept\b|kochen|backen|\baktien\b|börse|bitcoin|krypto|netflix|musik.*chart|nachrichten.*heute|tagesschau/i,'Das liegt außerhalb meines Fachgebiets — ich bin auf KI-Beratung für kleine Betriebe spezialisiert. Wenn Sie Fragen zu KI, EU AI Act, DSGVO oder meinen Tools haben, helfe ich gerne weiter.'],
+  [/\bwetter\b|wetterbericht|temperatur.*heute|regen.*morgen|fußball|bundesliga|sport.*ergebnis|rezept\b|kochen|backen|\baktien\b|börse|bitcoin|krypto|netflix|musik.*chart|nachrichten.*heute|tagesschau/i,'Das liegt außerhalb meines Fachgebiets — ich bin auf KI-Beratung für kleine Betriebe spezialisiert. Bei Fragen zu KI, EU AI Act, DSGVO oder den Sensibilis-Tools helfe ich gerne weiter.'],
 ];
 document.addEventListener('DOMContentLoaded',function(){
   var ci=document.getElementById('chat-in');
   if(ci)ci.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendChat();}});
 });
 const kbTopics=['KI Pass','Schnellcheck','KI Pass Preis','EU AI Act','EU AI Act Fristen','DSGVO','ChatGPT','Copilot','Risikoklassen','Content Planer','Website-Check','Handwerk','Hotel & Gastronomie','Wer ist Sensibilis','Region','Wie anfangen','Aufwand & Dauer','Beratung & Kontakt','Datenschutz KI-Tools','Zukunft & Tools','DMS','Begleitung & Leistungen','KI allgemein','Off-Topic'];
+function chipClick(text){
+  var chips=document.getElementById('chat-chips');
+  if(chips)chips.style.display='none';
+  document.getElementById('chat-in').value=text;
+  sendChat();
+}
 function sendChat(){
   const inp=document.getElementById('chat-in');
   const q=inp.value.trim();if(!q)return;
+  var chips=document.getElementById('chat-chips');
+  if(chips)chips.style.display='none';
   const msgs=document.getElementById('chat-msgs');
-  msgs.innerHTML+=`<div class="msg msg-user">${q}</div>`;
+  msgs.innerHTML+=`<div class="msg msg-user">${q.replace(/</g,'&lt;')}</div>`;
   inp.value='';
   const matchIdx=kb.findIndex(([rx])=>rx.test(q));
   const match=matchIdx>=0?kb[matchIdx]:null;
-  const reply=match?match[1]:'Das beantworte ich am besten persönlich — schreiben Sie mir an amen1@t-online.de.';
+  const reply=match?match[1]:'Das beantworte ich am besten persönlich — schreiben Sie Annett an amen1@t-online.de.';
   const topic=matchIdx>=0?kbTopics[matchIdx]||null:null;
   const isLead=/beratung|gespräch|termin|kontakt|schreib|mail|telefon|preis|kosten|wie teuer/i.test(q);
+  const typId='typ'+Date.now();
+  msgs.innerHTML+=`<div class="chat-typing" id="${typId}"><span></span><span></span><span></span></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
   setTimeout(()=>{
+    const typ=document.getElementById(typId);
+    if(typ)typ.remove();
     const cta=isLead?'<br><button class="chat-cta" onclick="nav(\'kontakt\')">Direkt anfragen &#8594;</button>':'';
     msgs.innerHTML+=`<div class="msg msg-bot">${reply}${cta}</div>`;
     msgs.scrollTop=msgs.scrollHeight;
@@ -4307,8 +4338,7 @@ function sendChat(){
         body:JSON.stringify({session_id:sid,user_message:q,bot_reply:reply,matched_topic:topic,led_to_contact:isLead})
       });
     }catch(e){}
-  },500);
-  msgs.scrollTop=msgs.scrollHeight;
+  },700);
 }
 </script>
 
