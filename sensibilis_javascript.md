@@ -1,6 +1,6 @@
 # Sensibilis — JavaScript-Logik (nur zum Lesen)
 
-Stand: 15.07.2026 — alle Bugfixes + Bild-Auslagerung eingearbeitet.
+Stand: 24.07.2026 — Lead-Formular im Chat, Consent-Checkbox, Mikrofon entfernt, Supabase-Tabelle sensibilis_leads.
 
 ---
 
@@ -386,7 +386,7 @@ const kb = [
   [/chatgpt|gpt|openai/i,                                   'ChatGPT ist das meistgenutzte KI-Tool in kleinen Betrieben...'],
   [/copilot|microsoft|office.*ki/i,                         'Microsoft Copilot hat einen AVV bereits standardmäßig eingebettet...'],
   [/risikoklasse|klasse|einstufung|hochrisiko/i,            'Der EU AI Act unterscheidet vier Stufen...'],
-  [/content.planer|redaktionsplan|social media.*ki/i,       'Den Content Planer entwickle ich gerade...'],
+  [/content.planer|redaktionsplan|social media.*ki/i,       'Der Content Planer ist bereits verfügbar — 490,- € einmalig inkl. 12 Monate Hosting...'],
   [/website.check|webcheck|website.*prüf/i,                 'Der Website-Check ist in Entwicklung...'],
   [/handwerk|werkstatt|tischler|schreiner/i,                'Im Handwerk steckt mehr KI-Potenzial als viele denken...'],
   [/hotel|gastronomie|restaurant|rezeption/i,               'Hotellerie und Gastronomie kenne ich aus eigener Erfahrung...'],
@@ -396,23 +396,48 @@ const kb = [
   [/aufwand|dauer|wie lang|wie viel zeit/i,                 'Der Schnellcheck dauert zwei Minuten...'],
   [/beratung|gespräch|termin|kontakt|mail/i,                'Das Erstgespräch ist ohne Berechnung...'],
   [/sicher|vertrauen|daten.*weg|training.*daten/i,          'Die meisten KI-Anbieter trainieren ihre Modelle mit Eingaben...'],
-  [/zukunft|geplant|demnächst|was kommt/i,                  'In Entwicklung: Content Planer und Website-Check...'],
+  [/zukunft|geplant|demnächst|was kommt/i,                  'Verfügbar: KI Pass, Schnellcheck, Content Planer. In Entwicklung: Website-Check, DMS...'],
   [/ki|künstliche intelligenz|ai\b/i,                       'KI ist längst kein Zukunftsthema mehr...'],
+  [/wetter|fußball|bundesliga|rezept|aktien|börse|bitcoin/i,'Das liegt außerhalb meines Fachgebiets — ich bin auf KI-Beratung spezialisiert...'],
 ];
 
+// Chip-Klick: Chips ausblenden, Text ins Eingabefeld, sendChat() aufrufen
+function chipClick(text) {
+  var chips = document.getElementById('chat-chips');
+  if (chips) chips.style.display = 'none';
+  document.getElementById('chat-in').value = text;
+  sendChat();
+}
+
 function sendChat() {
-  const inp   = document.getElementById('chat-in');
-  const q     = inp.value.trim(); if (!q) return;
-  const msgs  = document.getElementById('chat-msgs');
-  msgs.innerHTML += `<div class="msg msg-user">${q}</div>`;
+  const inp  = document.getElementById('chat-in');
+  const q    = inp.value.trim(); if (!q) return;
+  var chips  = document.getElementById('chat-chips');
+  if (chips) chips.style.display = 'none';       // Chips beim ersten Absenden ausblenden
+  const msgs = document.getElementById('chat-msgs');
+  msgs.innerHTML += `<div class="msg msg-user">${q.replace(/</g,'&lt;')}</div>`;
   inp.value = '';
-  const match = kb.find(([rx]) => rx.test(q));
-  const reply = match ? match[1] : 'Das beantworte ich am besten persönlich — schreiben Sie mir an amen1@t-online.de.';
-  setTimeout(() => {
-    msgs.innerHTML += `<div class="msg msg-bot">${reply}</div>`;
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 500);
+  const matchIdx = kb.findIndex(([rx]) => rx.test(q));
+  const match    = matchIdx >= 0 ? kb[matchIdx] : null;
+  const reply    = match ? match[1] : 'Das beantworte ich am besten persönlich — schreiben Sie Annett an amen1@t-online.de.';
+  const topic    = matchIdx >= 0 ? kbTopics[matchIdx] || null : null;
+  const isLead   = /beratung|gespräch|termin|kontakt|schreib|mail|telefon|preis|kosten|wie teuer/i.test(q);
+  // Tipp-Indikator (3 springende Punkte) für 700 ms
+  const typId = 'typ' + Date.now();
+  msgs.innerHTML += `<div class="chat-typing" id="${typId}"><span></span><span></span><span></span></div>`;
   msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(() => {
+    const typ = document.getElementById(typId);
+    if (typ) typ.remove();
+    const cta = isLead ? '<br><button class="chat-cta" onclick="nav(\'kontakt\')">Direkt anfragen →</button>' : '';
+    msgs.innerHTML += `<div class="msg msg-bot">${reply}${cta}</div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+    // Chat-Tracking direkt an Supabase (Render-Server umgangen)
+    try {
+      var sid = sessionStorage.getItem('snb_sid') || 'anon';
+      fetch('https://qrpaeeglfpfywunvvgkq.supabase.co/rest/v1/sensibilis_chats', { ... });
+    } catch(e) {}
+  }, 700);
 }
 ```
 
@@ -478,3 +503,41 @@ Sensibilis-Ki/
 ```
 
 Gepusht als Commit `eeb87ae` auf `AnMe15/Sensibilis-Ki`.
+
+---
+
+## Mikrofon-Funktion entfernt (24.07.2026)
+
+`startMic()`, `var _mic`, CSS für `#chat-mic` und `@keyframes micpulse` vollständig entfernt. Mikrofon-Button aus dem Chat-Eingabefeld entfernt. Begründung: Spracherkennungsqualität nicht überzeugend genug für den Produktivbetrieb.
+
+---
+
+## Lead-Formular im Chat (24.07.2026)
+
+Bei Beratungs-Themen (`Beratung & Kontakt` / `Beratung Ablauf`) erscheint nach der Bot-Antwort ein Inline-Formular direkt im Chat-Bubble.
+
+**Supabase-Tabelle:** `sensibilis_leads` (neu angelegt) mit Spalten: `id`, `created_at`, `name`, `email`, `session_id`, `source`, `newsletter_consent`.
+
+**CSS:** `.chat-lead-form`, `.lead-input`, `.lead-submit`
+
+**Funktion `submitLead(fid)`:**
+
+```javascript
+var _FORMSPREE = 'YOUR_FORM_ID'; // deaktiviert — DSGVO-Bedenken (US-Server)
+function submitLead(fid) {
+  var name    = document.getElementById('lf-name-'+fid).value.trim();
+  var email   = document.getElementById('lf-email-'+fid).value.trim();
+  if (!email) { /* E-Mail-Feld rot markieren + fokussieren */ return; }
+  var consent = document.getElementById('lf-consent-'+fid)
+                  ? document.getElementById('lf-consent-'+fid).checked : false;
+  // Formular durch Bestätigungstext ersetzen
+  document.getElementById('lead-form-'+fid).innerHTML = '<p>Danke [Name]! Annett meldet sich bei Ihnen.</p>';
+  // Speichern in Supabase sensibilis_leads (inkl. newsletter_consent)
+  fetch('https://qrpaeeglfpfywunvvgkq.supabase.co/rest/v1/sensibilis_leads', { method:'POST', ... });
+  // Formspree deaktiviert bis DSGVO-konformer Versandweg steht (ab 1.8. Render)
+}
+```
+
+**Consent-Checkbox:** Optional, unter "Anfrage senden". Text: *"Ja, ich möchte über neue KI-Tools und Angebote informiert werden."* Wert wird als `newsletter_consent` (Boolean) in Supabase gespeichert.
+
+**Nächster Schritt (ab 1.8.2026):** E-Mail-Benachrichtigung bei neuem Lead über Render-Backend (eigener SMTP, kein Drittanbieter).

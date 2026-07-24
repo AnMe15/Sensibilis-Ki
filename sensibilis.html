@@ -580,10 +580,6 @@ footer{background:var(--ink);padding:56px 48px 32px;}
 .chat-input-row button:hover{background:var(--c-d);}
 .chat-cta{display:inline-block;margin-top:8px;background:var(--c);color:#fff;text-decoration:none;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:opacity .2s;}
 .chat-cta:hover{opacity:.85}
-#chat-mic{background:#f5f0e8;color:var(--c);border:none;padding:0 12px;font-size:15px;cursor:pointer;transition:background .2s;border-right:1px solid #e0d8cc;flex-shrink:0;}
-#chat-mic:hover{background:#ede6d8;}
-#chat-mic.listening{background:var(--c);color:#fff;animation:micpulse .8s infinite alternate;}
-@keyframes micpulse{from{opacity:.7}to{opacity:1}}
 #chat-badge{position:absolute;top:-4px;right:-4px;background:#e53935;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;pointer-events:none;border:2px solid #fff;}
 @keyframes chatpulse{0%,100%{box-shadow:0 4px 20px rgba(0,0,0,.35),0 0 0 0 rgba(140,26,42,.5)}70%{box-shadow:0 4px 20px rgba(0,0,0,.35),0 0 0 12px rgba(140,26,42,0)}}
 #chat-btn.pulse{animation:chatpulse 2s infinite;}
@@ -591,6 +587,12 @@ footer{background:var(--ink);padding:56px 48px 32px;}
 .chat-fc{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
 .chat-chip-sm{background:#fff;border:1px solid rgba(140,26,42,.25);color:var(--c);padding:4px 10px;border-radius:16px;font-size:11px;cursor:pointer;font-family:inherit;transition:background .15s;}
 .chat-chip-sm:hover{background:var(--iv-d);}
+.chat-lead-form{background:#f9f6f0;border:1px solid rgba(140,26,42,.15);border-radius:5px;padding:11px 12px;margin-top:8px;overflow:hidden;word-break:break-word;}
+.chat-lead-form p{font-size:12px;color:var(--txt);margin:0 0 8px;line-height:1.4;}
+.lead-input{width:100%;box-sizing:border-box;border:1px solid #d8d0c4;border-radius:3px;padding:7px 10px;font-size:12px;font-family:inherit;margin-bottom:6px;outline:none;background:#fff;}
+.lead-input:focus{border-color:var(--c);}
+.lead-submit{width:100%;background:var(--c);color:#fff;border:none;padding:8px;border-radius:3px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .2s;}
+.lead-submit:hover{opacity:.85;}
 
 /* ══ CHECKLISTE ══════════════════════════════════════════════ */
 .chk-item{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;border:1px solid rgba(13,28,63,.12);border-radius:4px;margin-bottom:10px;cursor:pointer;transition:background .2s,border-color .2s;background:#fff;}
@@ -3999,7 +4001,6 @@ rd();step(1);
     </div>
     <div class="chat-input-row">
       <input id="chat-in" type="text" placeholder="Ihre Frage..." onkeydown="if(event.key==='Enter')sendChat()">
-      <button id="chat-mic" onclick="startMic()" title="Sprechen">&#x1F3A4;</button>
       <button onclick="sendChat()">&#x2192;</button>
     </div>
     <div id="chat-disclaimer">Sensi ist eine KI und kann Fehler machen &mdash; bei wichtigen Entscheidungen bitte direkt Annett fragen.</div>
@@ -4504,41 +4505,20 @@ function normQ(q){
     .replace(/chat\s*gpt/gi,'chatgpt')
     .replace(/redaktions\s*plan/gi,'redaktionsplan');
 }
-var _mic=null;
-function startMic(){
-  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  var btn=document.getElementById('chat-mic');
-  if(!SR){
-    btn.title='Nicht unterstützt (nur Chrome/Edge)';
-    btn.style.opacity='.4';
-    return;
+var _FORMSPREE='YOUR_FORM_ID';
+function submitLead(fid){
+  var name=document.getElementById('lf-name-'+fid).value.trim();
+  var email=document.getElementById('lf-email-'+fid).value.trim();
+  if(!email){document.getElementById('lf-email-'+fid).style.borderColor='var(--c)';document.getElementById('lf-email-'+fid).focus();return;}
+  var consent=document.getElementById('lf-consent-'+fid)?document.getElementById('lf-consent-'+fid).checked:false;
+  var form=document.getElementById('lead-form-'+fid);
+  form.innerHTML='<p style="color:var(--c);font-weight:600;margin:0;font-size:13px;">Danke'+(name?' '+name:'')+'! Annett meldet sich bei Ihnen.</p>';
+  var sid=sessionStorage.getItem('snb_sid')||'anon';
+  var _sk='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFycGFlZWdsZnBmeXd1bnZ2Z2txIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4OTQ3NDEsImV4cCI6MjA5ODQ3MDc0MX0.CsWL3SlhbaX9OHqaPx0KmTgHYg7hq63dRL_LYFDjK54';
+  try{fetch('https://qrpaeeglfpfywunvvgkq.supabase.co/rest/v1/sensibilis_leads',{method:'POST',headers:{'apikey':_sk,'Authorization':'Bearer '+_sk,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({name:name,email:email,session_id:sid,source:'chat',newsletter_consent:consent})});}catch(e){}
+  if(_FORMSPREE&&_FORMSPREE!=='YOUR_FORM_ID'){
+    try{fetch('https://formspree.io/f/'+_FORMSPREE,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:name,email:email,_subject:'Neue Beratungsanfrage — Sensibilis Chat'})});}catch(e){}
   }
-  if(_mic){_mic.stop();return;}
-  _mic=new SR();
-  _mic.lang='de-DE';
-  _mic.interimResults=false;
-  _mic.maxAlternatives=1;
-  btn.classList.add('listening');
-  btn.title='Zuhören... (klicken zum Stoppen)';
-  _mic.onresult=function(e){
-    var txt=e.results[0][0].transcript;
-    document.getElementById('chat-in').value=txt;
-    btn.classList.remove('listening');
-    btn.title='Sprechen';
-    _mic=null;
-    sendChat();
-  };
-  _mic.onerror=function(){
-    btn.classList.remove('listening');
-    btn.title='Sprechen';
-    _mic=null;
-  };
-  _mic.onend=function(){
-    btn.classList.remove('listening');
-    btn.title='Sprechen';
-    _mic=null;
-  };
-  _mic.start();
 }
 function chipClick(text){
   var chips=document.getElementById('chat-chips');
@@ -4569,7 +4549,10 @@ function sendChat(){
     const cta=isLead?'<br><button class="chat-cta" onclick="nav(\'kontakt\')">Direkt anfragen &#8594;</button>':'';
     const fc=matchIdx>=0&&kbChips[matchIdx]?kbChips[matchIdx]:[];
     const fcHtml=fc.length?'<div class="chat-fc">'+fc.map(function(c){return '<button class="chat-chip chat-chip-sm" onclick="chipClick(\''+c.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\'">'+c+'</button>';}).join('')+'</div>':'';
-    msgs.innerHTML+=`<div class="msg msg-bot">${postProcess(reply)}${cta}${fcHtml}</div>`;
+    const isBeratungTopic=topic==='Beratung & Kontakt'||topic==='Beratung Ablauf';
+    const fid='lf'+Date.now();
+    const leadHtml=isBeratungTopic?'<div class="chat-lead-form" id="lead-form-'+fid+'"><p>Direkt Kontaktdaten hinterlassen — Annett meldet sich:</p><input class="lead-input" id="lf-name-'+fid+'" type="text" placeholder="Ihr Name"><input class="lead-input" id="lf-email-'+fid+'" type="email" placeholder="E-Mail-Adresse *"><button class="lead-submit" onclick="submitLead(\''+fid+'\')">Anfrage senden &#8594;</button><label style="display:block;font-size:11px;color:var(--txt2);margin-top:8px;cursor:pointer;line-height:1.5;text-transform:none;letter-spacing:normal;font-weight:normal;padding-left:18px;text-indent:-18px;"><input type="checkbox" id="lf-consent-'+fid+'" style="width:auto;padding:0;margin-right:5px;accent-color:var(--c);vertical-align:middle;">Ja, ich m&ouml;chte &uuml;ber neue KI-Tools und Angebote informiert werden.</label></div>':'';
+    msgs.innerHTML+=`<div class="msg msg-bot">${postProcess(reply)}${leadHtml}${fcHtml}</div>`;
     msgs.scrollTop=msgs.scrollHeight;
     try{
       var sid=sessionStorage.getItem('snb_sid')||'anon';
