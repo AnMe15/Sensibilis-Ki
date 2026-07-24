@@ -588,6 +588,9 @@ footer{background:var(--ink);padding:56px 48px 32px;}
 @keyframes chatpulse{0%,100%{box-shadow:0 4px 20px rgba(0,0,0,.35),0 0 0 0 rgba(140,26,42,.5)}70%{box-shadow:0 4px 20px rgba(0,0,0,.35),0 0 0 12px rgba(140,26,42,0)}}
 #chat-btn.pulse{animation:chatpulse 2s infinite;}
 #chat-disclaimer{font-size:10px;color:#888;text-align:center;padding:5px 12px 7px;background:#faf8f5;border-top:1px solid #ece6dc;line-height:1.4;flex-shrink:0;}
+.chat-fc{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.chat-chip-sm{background:#fff;border:1px solid rgba(140,26,42,.25);color:var(--c);padding:4px 10px;border-radius:16px;font-size:11px;cursor:pointer;font-family:inherit;transition:background .15s;}
+.chat-chip-sm:hover{background:var(--iv-d);}
 
 /* ══ CHECKLISTE ══════════════════════════════════════════════ */
 .chk-item{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;border:1px solid rgba(13,28,63,.12);border-radius:4px;margin-bottom:10px;cursor:pointer;transition:background .2s,border-color .2s;background:#fff;}
@@ -4447,6 +4450,46 @@ document.addEventListener('DOMContentLoaded',function(){
   }
 });
 const kbTopics=['KI Pass','Schnellcheck','KI Pass Preis','EU AI Act','EU AI Act Fristen','DSGVO','ChatGPT','Copilot','Risikoklassen','Content Planer','Website-Check','Handwerk','Hotel & Gastronomie','Wer ist Sensibilis','Region','Wie anfangen','Aufwand & Dauer','Beratung Ablauf','Beratung & Kontakt','Datenschutz KI-Tools','Zukunft & Tools','DMS','Begleitung & Leistungen','KI allgemein','Off-Topic'];
+const kbChips=[
+  ['Was kostet der KI Pass?','Jetzt zum Schnellcheck','Beratung anfragen'],        // KI Pass
+  ['Zum Schnellcheck','Was kostet der KI Pass?','Beratung anfragen'],               // Schnellcheck
+  ['KI Pass starten','Erstgespräch anfragen'],                                       // KI Pass Preis
+  ['Welche Fristen gelten?','Was ist der KI Pass?','Schnellcheck starten'],         // EU AI Act
+  ['Was ist der KI Pass?','Beratung anfragen'],                                      // EU AI Act Fristen
+  ['KI Pass hilft dabei','Beratung anfragen'],                                       // DSGVO
+  ['DSGVO checken','Was ist der KI Pass?','Beratung anfragen'],                     // ChatGPT
+  ['Wie dokumentiere ich das?','Beratung anfragen'],                                 // Copilot
+  ['Schnellcheck starten','Was ist der KI Pass?'],                                   // Risikoklassen
+  ['Was kostet der Content Planer?','Demo ansehen','Beratung anfragen'],            // Content Planer
+  ['Beratung anfragen','Was ist der KI Pass?'],                                      // Website-Check
+  ['Wie fange ich an?','Erstgespräch anfragen'],                                     // Handwerk
+  ['Wie fange ich an?','Erstgespräch anfragen'],                                     // Hotel & Gastronomie
+  ['Erstgespräch anfragen','Was ist der KI Pass?'],                                  // Wer ist Sensibilis
+  ['Erstgespräch anfragen','Wie läuft die Beratung ab?'],                           // Region
+  ['Zum Schnellcheck','Was ist der KI Pass?'],                                       // Wie anfangen
+  ['KI Pass starten','Beratung anfragen'],                                            // Aufwand & Dauer
+  ['Termin anfragen','Was kostet die Beratung?'],                                    // Beratung Ablauf
+  [],                                                                                 // Beratung & Kontakt
+  ['Was ist der KI Pass?','Beratung anfragen'],                                      // Datenschutz KI-Tools
+  ['KI Pass starten','Beratung anfragen'],                                            // Zukunft & Tools
+  ['Informiert werden','Beratung anfragen'],                                          // DMS
+  ['KI Pass starten','Beratung anfragen','Content Planer'],                          // Begleitung & Leistungen
+  ['Schnellcheck starten','Was ist der KI Pass?'],                                   // KI allgemein
+  [],                                                                                 // Off-Topic
+];
+function postProcess(reply){
+  if(new Date()<new Date('2026-08-01'))return reply;
+  return reply
+    .replace(/39,?-?\s?€/g,'59,- €')
+    .replace(/\bim Juli\b,?\s*/gi,'')
+    .replace(/Im Juli gibt es den KI Pass für[^—]*—\s*/gi,'')
+    .replace(/das ist das Juli-Angebot\.?\s*/gi,'')
+    .replace(/Wenn Sie also gerade hier sind: guter Zeitpunkt\.\s*/gi,'')
+    .replace(/Ab August (?:sind es|wird er) 59[^.]*\.\s*/gi,'')
+    .replace(/Nach Juli wird er 59[^.]*\.\s*/gi,'')
+    .replace(/nur im Juli:?\s*/gi,'')
+    .replace(/\s{2,}/g,' ').trim();
+}
 function normQ(q){
   return q
     .replace(/plann+er/gi,'planer')
@@ -4524,7 +4567,9 @@ function sendChat(){
     const typ=document.getElementById(typId);
     if(typ)typ.remove();
     const cta=isLead?'<br><button class="chat-cta" onclick="nav(\'kontakt\')">Direkt anfragen &#8594;</button>':'';
-    msgs.innerHTML+=`<div class="msg msg-bot">${reply}${cta}</div>`;
+    const fc=matchIdx>=0&&kbChips[matchIdx]?kbChips[matchIdx]:[];
+    const fcHtml=fc.length?'<div class="chat-fc">'+fc.map(function(c){return '<button class="chat-chip chat-chip-sm" onclick="chipClick(\''+c.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\'">'+c+'</button>';}).join('')+'</div>':'';
+    msgs.innerHTML+=`<div class="msg msg-bot">${postProcess(reply)}${cta}${fcHtml}</div>`;
     msgs.scrollTop=msgs.scrollHeight;
     try{
       var sid=sessionStorage.getItem('snb_sid')||'anon';
