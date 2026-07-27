@@ -4143,7 +4143,24 @@ async function handleForm(e){
   var origHTML=btn.innerHTML;
   btn.innerHTML='Wird gesendet …';
   btn.disabled=true;
-  var payload={data:{fields:[{value:nameVal},{value:''},{value:emailVal},{value:companyVal},{value:msgVal}]}};
+  var ts=new Date().toISOString();
+  var rid='website-'+Date.now();
+  var payload={
+    eventId:rid,
+    eventType:'FORM_RESPONSE',
+    createdAt:ts,
+    data:{
+      responseId:rid,
+      submittedAt:ts,
+      fields:[
+        {key:'q_name',label:'Vorname',type:'INPUT_TEXT',value:nameVal},
+        {key:'q_nachname',label:'Nachname',type:'INPUT_TEXT',value:''},
+        {key:'q_email',label:'E-Mail-Adresse',type:'INPUT_EMAIL',value:emailVal},
+        {key:'q_company',label:'Unternehmen',type:'INPUT_TEXT',value:companyVal},
+        {key:'q_message',label:'Anliegen',type:'TEXTAREA',value:msgVal}
+      ]
+    }
+  };
   var WEBHOOK='https://hook.eu1.make.com/ffp2a623qrcb5gahkvyyk59qk6f1irej';
   var ok=false;
   for(var i=0;i<3&&!ok;i++){
