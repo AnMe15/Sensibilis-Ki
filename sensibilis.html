@@ -4143,7 +4143,7 @@ async function handleForm(e){
   var origHTML=btn.innerHTML;
   btn.innerHTML='Wird gesendet …';
   btn.disabled=true;
-  var payload={data:{fields:[null,{value:nameVal},{value:''},{value:emailVal},{value:companyVal},{value:msgVal}]}};
+  var payload={data:{fields:[{value:nameVal},{value:''},{value:emailVal},{value:companyVal},{value:msgVal}]}};
   var WEBHOOK='https://hook.eu1.make.com/ffp2a623qrcb5gahkvyyk59qk6f1irej';
   var ok=false;
   for(var i=0;i<3&&!ok;i++){
