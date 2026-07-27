@@ -4130,10 +4130,37 @@ function toggleFaq(btn){
 }
 
 /* ── FORM ──────────────────────────────────────────────── */
-function handleForm(e){
+async function handleForm(e){
   e.preventDefault();
-  document.getElementById('contact-success').style.display='block';
-  e.target.reset();
+  var form=e.target;
+  var inputs=form.querySelectorAll('input,textarea');
+  var nameVal=inputs[0].value.trim();
+  var companyVal=inputs[1].value.trim();
+  var emailVal=inputs[2].value.trim();
+  var msgVal=inputs[3].value.trim();
+  if(!nameVal||!emailVal||!msgVal){alert('Bitte füllen Sie Name, E-Mail und Nachricht aus.');return;}
+  var btn=form.querySelector('button[type="submit"]');
+  var origHTML=btn.innerHTML;
+  btn.innerHTML='Wird gesendet …';
+  btn.disabled=true;
+  var payload={data:{fields:[null,{value:nameVal},{value:''},{value:emailVal},{value:companyVal},{value:msgVal}]}};
+  var WEBHOOK='https://hook.eu1.make.com/ffp2a623qrcb5gahkvyyk59qk6f1irej';
+  var ok=false;
+  for(var i=0;i<3&&!ok;i++){
+    try{
+      var res=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      if(res.ok)ok=true;
+      else if(i<2)await new Promise(r=>setTimeout(r,1500));
+    }catch(err){if(i<2)await new Promise(r=>setTimeout(r,1500));}
+  }
+  btn.disabled=false;
+  btn.innerHTML=origHTML;
+  if(ok){
+    document.getElementById('contact-success').style.display='block';
+    form.reset();
+  }else{
+    alert('Leider gab es ein technisches Problem. Bitte schreiben Sie direkt an amen1@t-online.de.');
+  }
 }
 
 /* ── CHECKLISTE ────────────────────────────────────────── */
