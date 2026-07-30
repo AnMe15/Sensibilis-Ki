@@ -597,4 +597,11 @@ async function markAbschluss(id, value) {
 - **Nach jeder Brevo-Mail**: Brevo-Webhook → Make.com "Brevo Stage Update" → PATCH `stage` + `stage_entered_at`
 - URL-Parameter `?next_stage=c2` etc. — Kontakt-E-Mail via Brevo-Toggle
 
+### Telefonnummer (31.07.2026)
+
+- **Tally**: Feld "Telefon" (Phone number, optional) an Position 5 eingefügt
+- **Supabase**: Spalte `telefon TEXT` in `funnel_leads` + `leads`; `insert_lead_from_tally` um `p_telefon text DEFAULT NULL` erweitert
+- **Make.com Haupt-Szenario**: `p_telefon: {{2.data.fields[5].value}}` im RPC-Body; `"telefon": "{{2.data.fields[5].value}}"` im PATCH-Body zu `funnel_leads`
+- **Dashboard**: Zeile 623 — `l.telefon` war bereits im Kontakt-Block vorhanden (`${l.telefon?'<br>'+l.telefon:''}`)
+
 **Nächster Schritt (ab 1.8.2026):** E-Mail-Benachrichtigung bei neuem Lead über Render-Backend (eigener SMTP, kein Drittanbieter).
