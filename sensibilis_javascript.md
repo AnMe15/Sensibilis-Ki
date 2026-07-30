@@ -540,4 +540,61 @@ function submitLead(fid) {
 
 **Consent-Checkbox:** Optional, unter "Anfrage senden". Text: *"Ja, ich möchte über neue KI-Tools und Angebote informiert werden."* Wert wird als `newsletter_consent` (Boolean) in Supabase gespeichert.
 
+---
+
+## Dashboard — Kanban-Pipeline (31.07.2026)
+
+**Datei:** `dashboard.html` — Passwort: `sensibilis2026`
+
+**Supabase-Tabelle `funnel_leads`** — neue Spalten:
+- `stage` TEXT — aktueller Stage-Wert (`c1`–`c5`, `w1`–`w3`, `hot`)
+- `stage_entered_at` TIMESTAMPTZ — Zeitpunkt des letzten Stage-Wechsels
+- `abschluss` TEXT — `null` (aktiv) / `'gewonnen'` / `'verloren'`
+
+### Kanban-Struktur
+
+4 Tracks, immer sichtbar:
+- **Hot-Spur** (1 Spalte): `score='hot'`, kein `abschluss`
+- **Warm-Spur** (3 Spalten): w1 / w2 / w3
+- **Kalt-Spur** (5 Spalten): c1 Erstantwort / c2 Das stille Problem / c3 Die eigentliche Frage / c4 Konkretes Bild / c5 Abschluss
+- **Abgeschlossen** (2 Spalten): Gewonnen / Nicht gewonnen
+
+### Stage-Funktionen
+
+```javascript
+function stg(l) {
+  if (l.stage) return l.stage; // primär aus Supabase
+  // Fallback: tagebasiert (wenn stage noch nicht gesetzt)
+  const d = Math.floor((Date.now() - new Date(l.created_at)) / 86400000);
+  if (l.score === 'warm') return d < 3 ? 'w1' : d < 7 ? 'w2' : 'w3';
+  return d < 3 ? 'c1' : d < 7 ? 'c2' : d < 11 ? 'c3' : d < 15 ? 'c4' : 'c5';
+}
+
+function stgDate(l) {
+  if (!l.stage_entered_at) return '';
+  return new Date(l.stage_entered_at).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' });
+}
+```
+
+### Abschluss markieren
+
+```javascript
+async function markAbschluss(id, value) {
+  if (!confirm('Lead als "' + (value === 'gewonnen' ? 'Gewonnen' : 'Nicht gewonnen') + '" markieren?')) return;
+  await fetch(SB_URL + '/rest/v1/funnel_leads?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ abschluss: value })
+  });
+  closeLeadPanel();
+  loadLeads();
+}
+```
+
+### Automatische Stage-Progression (Make.com + Brevo)
+
+- **Eingang**: Make.com Haupt-Szenario setzt `stage` = `c1`/`w1`/`hot` + `stage_entered_at`
+- **Nach jeder Brevo-Mail**: Brevo-Webhook → Make.com "Brevo Stage Update" → PATCH `stage` + `stage_entered_at`
+- URL-Parameter `?next_stage=c2` etc. — Kontakt-E-Mail via Brevo-Toggle
+
 **Nächster Schritt (ab 1.8.2026):** E-Mail-Benachrichtigung bei neuem Lead über Render-Backend (eigener SMTP, kein Drittanbieter).
