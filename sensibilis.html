@@ -2467,28 +2467,8 @@ rd();step(1);
         </div>
       </div>
       <div>
-        <form onsubmit="handleForm(event)" style="display:flex;flex-direction:column;gap:16px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div>
-              <label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);display:block;margin-bottom:6px;">Name</label>
-              <input type="text" placeholder="Ihr Name" style="width:100%;padding:12px 16px;border:1px solid var(--bdr);background:var(--bg2);font-size:14px;color:var(--txt);outline:none;">
-            </div>
-            <div>
-              <label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);display:block;margin-bottom:6px;">Unternehmen</label>
-              <input type="text" placeholder="Optional" style="width:100%;padding:12px 16px;border:1px solid var(--bdr);background:var(--bg2);font-size:14px;color:var(--txt);outline:none;">
-            </div>
-          </div>
-          <div>
-            <label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);display:block;margin-bottom:6px;">E-Mail</label>
-            <input type="email" placeholder="ihre@email.de" style="width:100%;padding:12px 16px;border:1px solid var(--bdr);background:var(--bg2);font-size:14px;color:var(--txt);outline:none;">
-          </div>
-          <div>
-            <label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);display:block;margin-bottom:6px;">Nachricht</label>
-            <textarea rows="4" placeholder="Womit kann ich Ihnen helfen?" style="width:100%;padding:12px 16px;border:1px solid var(--bdr);background:var(--bg2);font-size:14px;color:var(--txt);outline:none;resize:vertical;"></textarea>
-          </div>
-          <button class="btn btn-red" type="submit">Nachricht senden &rarr;</button>
-          <div id="contact-success" style="display:none;padding:16px;background:#edf7ed;border:1px solid #9dc89d;font-size:14px;color:#2d6a2d;">Vielen Dank! Ich melde mich innerhalb von 24 Stunden.</div>
-        </form>
+        <iframe data-tally-src="https://tally.so/embed/PdL1Mb?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0" title="Kontakt — Sensibilis KI-Beratung"></iframe>
+        <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
       </div>
     </div>
   </div>
@@ -4149,7 +4129,7 @@ async function handleForm(e){
     company:companyVal,
     message:msgVal
   };
-  var WEBHOOK='https://hook.eu1.make.com/ffp2a623qrcb5gahkvyyk59qk6f1irej';
+  var WEBHOOK='https://hook.eu1.make.com/y2fugc817lalkoc7eu5bskjcc98ghhos';
   var ok=false;
   for(var i=0;i<3&&!ok;i++){
     try{
