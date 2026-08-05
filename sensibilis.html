@@ -587,6 +587,10 @@ footer{background:var(--ink);padding:56px 48px 32px;}
 .chat-fc{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
 .chat-chip-sm{background:#fff;border:1px solid rgba(140,26,42,.25);color:var(--c);padding:4px 10px;border-radius:16px;font-size:11px;cursor:pointer;font-family:inherit;transition:background .15s;}
 .chat-chip-sm:hover{background:var(--iv-d);}
+.chat-chip-nav{background:var(--c);border-color:var(--c);color:#fff;}
+.chat-chip-nav:hover{background:#73101f;border-color:#73101f;}
+.chat-link{color:var(--c);font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer;}
+.chat-link:hover{color:#73101f;}
 .chat-lead-form{background:#f9f6f0;border:1px solid rgba(140,26,42,.15);border-radius:5px;padding:11px 12px;margin-top:8px;overflow:hidden;word-break:break-word;}
 .chat-lead-form p{font-size:12px;color:var(--txt);margin:0 0 8px;line-height:1.4;}
 .lead-input{width:100%;box-sizing:border-box;border:1px solid #d8d0c4;border-radius:3px;padding:7px 10px;font-size:12px;font-family:inherit;margin-bottom:6px;outline:none;background:#fff;}
@@ -1921,7 +1925,7 @@ window.cpdStart=function(){
       </div>
     </div>
     <!-- ── Mini-Schnellcheck ──────────────────────────────────────────────── -->
-    <div style="background:var(--iv);border:1px solid rgba(184,146,74,.3);border-radius:8px;padding:48px 40px;margin-bottom:48px;">
+    <div id="schnellcheck" style="background:var(--iv);border:1px solid rgba(184,146,74,.3);border-radius:8px;padding:48px 40px;margin-bottom:48px;scroll-margin-top:100px;">
       <span class="eyebrow">Jetzt ausprobieren</span>
       <h2 style="font-family:Georgia,serif;font-weight:normal;font-size:clamp(22px,2.5vw,30px);color:var(--txt);margin:14px 0 8px;">Wo steht Ihr Unternehmen?</h2>
       <p style="font-size:14px;color:var(--txt2);line-height:1.75;margin-bottom:28px;">3 Fragen &mdash; 2 Minuten &mdash; direkte Einordnung. Keine Anmeldung erforderlich.</p>
@@ -4021,7 +4025,7 @@ function blogGo(n){
   pager.innerHTML=html;
   window.scrollTo({top:0,behavior:'instant'});
 }
-function nav(id){
+function nav(id,anchor){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   var pg=document.getElementById('page-'+id);
   if(pg)pg.classList.add('active');
@@ -4038,6 +4042,12 @@ function nav(id){
     document.title=m.t;
     var dm=document.querySelector('meta[name="description"]');
     if(dm)dm.setAttribute('content',m.d);
+  }
+  if(anchor){
+    setTimeout(function(){
+      var el=document.getElementById(anchor);
+      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+    },60);
   }
 }
 window.addEventListener('popstate',function(){
@@ -4532,9 +4542,53 @@ function submitLead(fid){
     try{fetch('https://formspree.io/f/'+_FORMSPREE,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:name,email:email,_subject:'Neue Beratungsanfrage — Sensibilis Chat'})});}catch(e){}
   }
 }
+/* ── Button-Beschriftung → Zielseite (leerer 2. Wert = Seitenanfang) ── */
+const chipNav={
+  'jetzt zum schnellcheck':['kipass','schnellcheck'],
+  'zum schnellcheck':['kipass','schnellcheck'],
+  'schnellcheck starten':['kipass','schnellcheck'],
+  'ki pass starten':['kipass',''],
+  'beratung anfragen':['beratung',''],
+  'erstgespräch anfragen':['beratung',''],
+  'termin anfragen':['beratung',''],
+  'informiert werden':['kontakt',''],
+  'demo ansehen':['contentplaner',''],
+  'content planer':['contentplaner','']
+};
+function chipTarget(t){return chipNav[String(t).toLowerCase().trim()]||null;}
+/* ── Begriffe im Antworttext automatisch verlinken (erste Nennung) ── */
+const autoLinks=[
+  [/\bSchnellcheck\b/,'kipass','schnellcheck'],
+  [/\bKI[-\s]Pass\b/,'kipass',''],
+  [/\bContent[-\s]Planer\b/,'contentplaner',''],
+  [/\bBeratung\b/,'beratung','']
+];
+function linkify(txt){
+  autoLinks.forEach(function(l){
+    var parts=txt.split(/(<[^>]*>)/),inA=false,done=false;
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i];
+      if(p.charAt(0)==='<'){
+        if(/^<a\b/i.test(p))inA=true;
+        else if(/^<\/a>/i.test(p))inA=false;
+        continue;
+      }
+      if(done||inA||!l[0].test(p))continue;
+      parts[i]=p.replace(l[0],function(m){
+        var call="nav('"+l[1]+"'"+(l[2]?",'"+l[2]+"'":'')+")";
+        return '<a class="chat-link" onclick="'+call+'">'+m+'</a>';
+      });
+      done=true;
+    }
+    txt=parts.join('');
+  });
+  return txt;
+}
 function chipClick(text){
   var chips=document.getElementById('chat-chips');
   if(chips)chips.style.display='none';
+  var t=chipTarget(text);
+  if(t){nav(t[0],t[1]);return;}
   document.getElementById('chat-in').value=text;
   sendChat();
 }
@@ -4560,11 +4614,16 @@ function sendChat(){
     if(typ)typ.remove();
     const cta=isLead?'<br><button class="chat-cta" onclick="nav(\'kontakt\')">Direkt anfragen &#8594;</button>':'';
     const fc=matchIdx>=0&&kbChips[matchIdx]?kbChips[matchIdx]:[];
-    const fcHtml=fc.length?'<div class="chat-fc">'+fc.map(function(c){return '<button class="chat-chip chat-chip-sm" onclick="chipClick(\''+c.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\'">'+c+'</button>';}).join('')+'</div>':'';
+    const fcHtml=fc.length?'<div class="chat-fc">'+fc.map(function(c){
+      var isNav=!!chipTarget(c);
+      var arg=c.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      return '<button class="chat-chip chat-chip-sm'+(isNav?' chat-chip-nav':'')+'" onclick="chipClick(\''+arg+'\')">'+c+(isNav?' &#8594;':'')+'</button>';
+    }).join('')+'</div>':'';
     const isBeratungTopic=topic==='Beratung & Kontakt'||topic==='Beratung Ablauf';
     const fid='lf'+Date.now();
     const leadHtml=isBeratungTopic?'<div class="chat-lead-form" id="lead-form-'+fid+'"><p>Direkt Kontaktdaten hinterlassen — Annett meldet sich:</p><input class="lead-input" id="lf-name-'+fid+'" type="text" placeholder="Ihr Name"><input class="lead-input" id="lf-email-'+fid+'" type="email" placeholder="E-Mail-Adresse *"><button class="lead-submit" onclick="submitLead(\''+fid+'\')">Anfrage senden &#8594;</button><label style="display:block;font-size:11px;color:var(--txt2);margin-top:8px;cursor:pointer;line-height:1.5;text-transform:none;letter-spacing:normal;font-weight:normal;padding-left:18px;text-indent:-18px;"><input type="checkbox" id="lf-consent-'+fid+'" style="width:auto;padding:0;margin-right:5px;accent-color:var(--c);vertical-align:middle;">Ja, ich m&ouml;chte &uuml;ber neue KI-Tools und Angebote informiert werden.</label></div>':'';
-    msgs.innerHTML+=`<div class="msg msg-bot">${postProcess(reply)}${leadHtml}${fcHtml}</div>`;
+    const ctaHtml=(isLead&&!isBeratungTopic&&!fc.length)?cta:'';
+    msgs.innerHTML+=`<div class="msg msg-bot">${linkify(postProcess(reply))}${ctaHtml}${leadHtml}${fcHtml}</div>`;
     msgs.scrollTop=msgs.scrollHeight;
     try{
       var sid=sessionStorage.getItem('snb_sid')||'anon';

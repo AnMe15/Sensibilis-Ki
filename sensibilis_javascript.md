@@ -605,3 +605,59 @@ async function markAbschluss(id, value) {
 - **Dashboard**: Zeile 623 — `l.telefon` war bereits im Kontakt-Block vorhanden (`${l.telefon?'<br>'+l.telefon:''}`)
 
 **Nächster Schritt (ab 1.8.2026):** E-Mail-Benachrichtigung bei neuem Lead über Render-Backend (eigener SMTP, kein Drittanbieter).
+
+## Chatbot: Buttons und Textlinks verlinkt (05.08.2026)
+
+### Behobener Fehler
+In der Erzeugung der Follow-up-Buttons (`fcHtml` in `sendChat`) fehlte die schliessende
+Klammer im onclick-Attribut: `onclick="chipClick('Text'"`. Ergebnis: JavaScript-Syntaxfehler
+bei jedem Klick — saemtliche Buttons im Chatverlauf waren wirkungslos. Die vier Start-Chips
+unter dem Eingabefeld waren nicht betroffen (statisch im HTML).
+
+Ebenfalls tot war die Variable `cta` ("Direkt anfragen"): definiert, aber nie ins
+`msgs.innerHTML` eingesetzt. Wird jetzt nur noch gezeigt, wenn weder Lead-Formular
+noch Navigations-Buttons in der Antwort stecken.
+
+### chipNav — Button-Beschriftung zu Zielseite
+```js
+const chipNav={
+  'jetzt zum schnellcheck':['kipass','schnellcheck'],
+  'zum schnellcheck':['kipass','schnellcheck'],
+  'schnellcheck starten':['kipass','schnellcheck'],
+  'ki pass starten':['kipass',''],
+  'beratung anfragen':['beratung',''],
+  'erstgespräch anfragen':['beratung',''],
+  'termin anfragen':['beratung',''],
+  'informiert werden':['kontakt',''],
+  'demo ansehen':['contentplaner',''],
+  'content planer':['contentplaner','']
+};
+```
+`chipClick(text)` prueft ueber `chipTarget()`: Treffer -> `nav(seite,anker)`, sonst wie bisher
+Chat-Antwort. Schluessel sind kleingeschrieben, Abgleich per `toLowerCase().trim()`.
+**Neue Buttons in `kbChips` immer hier eintragen, sonst bleiben sie reine Chat-Buttons.**
+
+Navigations-Buttons bekommen die Klasse `chat-chip-nav` (burgund gefuellt) plus Pfeil,
+Frage-Buttons bleiben hell. Unterscheidung ist damit auf einen Blick sichtbar.
+
+### linkify — Begriffe im Antworttext
+`linkify(txt)` verlinkt je Nachricht die **erste** Nennung von: Schnellcheck (-> kipass
+#schnellcheck), KI Pass, Content Planer, Beratung. Aufruf in `sendChat`:
+`linkify(postProcess(reply))`.
+
+Arbeitet ueber `txt.split(/(<[^>]*>)/)` und ersetzt nur ausserhalb von Tags; ein `inA`-Flag
+verhindert verschachtelte Links. Die ~200 Antworttexte in `kb` bleiben unveraendert.
+
+### nav() mit Sprungziel
+`function nav(id,anchor)` — bei gesetztem `anchor` nach 60 ms `scrollIntoView`.
+Der Mini-Schnellcheck auf der KI-Pass-Seite hat dafuer `id="schnellcheck"` und
+`scroll-margin-top:100px` (Abstand zur fixierten Kopfzeile).
+
+### CSS
+`.chat-chip-nav`, `.chat-chip-nav:hover`, `.chat-link`, `.chat-link:hover` — direkt
+nach `.chat-chip-sm:hover`.
+
+### Offen
+Die Frage "Was kostet der Content Planer?" trifft in `kb` auf das Thema "KI Pass Preis"
+statt auf den Content Planer. Zuordnungsfehler in der Wissensbasis, unabhaengig von
+dieser Aenderung — noch nicht korrigiert.
