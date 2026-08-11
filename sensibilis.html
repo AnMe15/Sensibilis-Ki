@@ -4536,8 +4536,7 @@ function submitLead(fid){
   var form=document.getElementById('lead-form-'+fid);
   form.innerHTML='<p style="color:var(--c);font-weight:600;margin:0;font-size:13px;">Danke'+(name?' '+name:'')+'! Annett meldet sich bei Ihnen.</p>';
   var sid=sessionStorage.getItem('snb_sid')||'anon';
-  var _sk='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFycGFlZWdsZnBmeXd1bnZ2Z2txIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4OTQ3NDEsImV4cCI6MjA5ODQ3MDc0MX0.CsWL3SlhbaX9OHqaPx0KmTgHYg7hq63dRL_LYFDjK54';
-  try{fetch('https://qrpaeeglfpfywunvvgkq.supabase.co/rest/v1/sensibilis_leads',{method:'POST',headers:{'apikey':_sk,'Authorization':'Bearer '+_sk,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({name:name,email:email,session_id:sid,source:'chat',newsletter_consent:consent})});}catch(e){}
+  try{fetch('https://sensibilis-api.onrender.com/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,session_id:sid,source:'chat',newsletter_consent:consent})});}catch(e){}
   if(_FORMSPREE&&_FORMSPREE!=='YOUR_FORM_ID'){
     try{fetch('https://formspree.io/f/'+_FORMSPREE,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:name,email:email,_subject:'Neue Beratungsanfrage — Sensibilis Chat'})});}catch(e){}
   }
@@ -4627,10 +4626,9 @@ function sendChat(){
     msgs.scrollTop=msgs.scrollHeight;
     try{
       var sid=sessionStorage.getItem('snb_sid')||'anon';
-      var _sk='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFycGFlZWdsZnBmeXd1bnZ2Z2txIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4OTQ3NDEsImV4cCI6MjA5ODQ3MDc0MX0.CsWL3SlhbaX9OHqaPx0KmTgHYg7hq63dRL_LYFDjK54';
-      fetch('https://qrpaeeglfpfywunvvgkq.supabase.co/rest/v1/sensibilis_chats',{
+      fetch('https://sensibilis-api.onrender.com/api/chat',{
         method:'POST',
-        headers:{'apikey':_sk,'Authorization':'Bearer '+_sk,'Content-Type':'application/json','Prefer':'return=minimal'},
+        headers:{'Content-Type':'application/json'},
         body:JSON.stringify({session_id:sid,user_message:q,bot_reply:reply,matched_topic:topic,led_to_contact:isLead})
       });
     }catch(e){}
@@ -4641,9 +4639,8 @@ function sendChat(){
 <!-- ══ SENSIBILIS ANALYTICS TRACKING ════════════════════════ -->
 <script>
 (function(){
-  var SB_URL='https://qrpaeeglfpfywunvvgkq.supabase.co/rest/v1/';
-  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFycGFlZWdsZnBmeXd1bnZ2Z2txIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4OTQ3NDEsImV4cCI6MjA5ODQ3MDc0MX0.CsWL3SlhbaX9OHqaPx0KmTgHYg7hq63dRL_LYFDjK54';
-  var HDRS={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'};
+  var API='https://sensibilis-api.onrender.com';
+  var TYP={sensibilis_pageviews:'pageview',sensibilis_timing:'timing',sensibilis_clicks:'click'};
 
   var sid=sessionStorage.getItem('snb_sid');
   if(!sid){sid='s'+(Date.now().toString(36)+Math.random().toString(36).slice(2,7));sessionStorage.setItem('snb_sid',sid);}
@@ -4661,7 +4658,7 @@ function sendChat(){
   }
 
   function send(table,data){
-    try{fetch(SB_URL+table,{method:'POST',headers:HDRS,body:JSON.stringify(data),keepalive:true});}catch(e){}
+    try{data.type=TYP[table];fetch(API+'/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),keepalive:true});}catch(e){}
   }
 
   var maxScroll=0;
